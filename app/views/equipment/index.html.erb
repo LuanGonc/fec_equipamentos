@@ -22,17 +22,17 @@
     </div>
     <div>
       <%= e.label :purchase_date_lteq, "Antes de" %>
-      <%= e.search_field :purchase_date_lteq %>
+      <%= e.date_field :purchase_date_lteq %>
     </div>
 
     <div>
       <%= e.label :purchase_date_gteq, "Depois de" %>
-      <%= e.search_field :purchase_date_gteq %>
+      <%= e.date_field :purchase_date_gteq %>
     </div>
 
     <div>
       <%= e.label :purchase_date_eq, "No dia" %>
-      <%= e.search_field :purchase_date_eq %>
+      <%= e.date_field :purchase_date_eq %>
     </div>
     <div>
       <%= e.submit "Filtrar" %>

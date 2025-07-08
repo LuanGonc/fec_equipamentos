@@ -10,6 +10,8 @@ class EquipmentController < ApplicationController
   # GET /equipment/1 or /equipment/1.json
   def show
     @equipment = Equipment.find(params[:id])
+    @q = Loan.where(equipment_id: @equipment.id).ransack(params[:q]) #aplica o filtor de equipamento primeiro, depois o Ransack fintra dentro disso
+    @filtered_loans = @q.result.includes(:collaborator).order(created_at: :desc)
   end
 
   # GET /equipment/new

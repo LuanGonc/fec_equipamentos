@@ -2,6 +2,20 @@ class Loan < ApplicationRecord
   belongs_to :equipment
   belongs_to :collaborator
 
+ 
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "loan_action", "loan_date", "return_date", "return_reason",
+      "discard_date", "discard_reason", "created_at", "updated_at",
+      "equipment_id", "collaborator_id"
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["collaborator"]
+  end
+
+
     enum loan_action: {
     emprestimo: "emprestimo",
     devolucao: "devolucao",
