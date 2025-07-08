@@ -12,18 +12,19 @@
   <% end %>
 
   <div>
-    <%= form.label :equipment_id, style: "display: block" %>
-    <%= form.text_field :equipment_id %>
+    <%= form.label :equipment_id, "Equipamento" %>
+<%= form.collection_select :equipment_id, Equipment.all, :id, :identifier, prompt: "Selecione um equipamento" %>
   </div>
 
   <div>
-    <%= form.label :collaborator_id, style: "display: block" %>
-    <%= form.text_field :collaborator_id %>
+    <%= form.label :collaborator_id, "Colaborador" %>
+    <%= form.collection_select :collaborator_id, Collaborator.all, :id, :name, prompt: "Selecione um colaborador" %>
   </div>
 
   <div>
-    <%= form.label :action, style: "display: block" %>
-    <%= form.text_field :action %>
+    <%= form.label :loan_action, "Tipo de Ação" %>
+    <%= form.select :loan_action, Loan.loan_actions.keys.map { |a| [a.titleize, a] }, prompt: "Selecione a ação" %>
+
   </div>
 
   <div>

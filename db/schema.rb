@@ -15,7 +15,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_010234) do
   enable_extension "plpgsql"
 
   create_table "collaborators", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "email"
     t.string "department"
     t.datetime "created_at", null: false
@@ -42,7 +42,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_010234) do
   create_table "loans", force: :cascade do |t|
     t.bigint "equipment_id", null: false
     t.bigint "collaborator_id", null: false
-    t.string "action", null: false
+    t.string "loan_action", null: false
     t.date "loan_date"
     t.date "return_date"
     t.text "return_reason"
