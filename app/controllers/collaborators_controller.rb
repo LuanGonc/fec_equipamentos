@@ -9,6 +9,8 @@ class CollaboratorsController < ApplicationController
   # GET /collaborators/1 or /collaborators/1.json
   def show
     @collaborator = Collaborator.find(params[:id])
+    @q = Loan.where(collaborator_id: @collaborator.id).ransack(params[:q]) #aplica o filtor de Colaborador primeiro, depois o Ransack filtra dentro disso
+    @filtered_loans = @q.result.includes(:equipment).order(created_at: :desc)
   end
 
   # GET /collaborators/new
