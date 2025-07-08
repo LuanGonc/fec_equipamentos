@@ -1,7 +1,7 @@
-<h3>Histórico de Empréstimos</h3>
+<h3 align="center">Histórico de Empréstimos</h3>
 
 <% if @equipment.loans.any? %>
-  <table>
+  <table border="1px" align="center">
     <thead>
       <tr>
         <th>Ação</th>
@@ -18,8 +18,8 @@
             <%=
               case loan.loan_action
               when "emprestimo" then loan.loan_date
-              when "devolucao" then loan.return_date
-              when "baixa" then loan.discard_date
+              when "devolucao"  then loan.return_date
+              when "baixa"      then loan.discard_date
               end
             %>
           </td>
@@ -27,8 +27,8 @@
           <td>
             <%=
               case loan.loan_action
-              when "devolucao" then loan.return_reason
-              when "baixa" then loan.discard_reason
+              when "devolucao"  then loan.return_reason
+              when "baixa"      then loan.discard_reason
               else "-"
               end
             %>

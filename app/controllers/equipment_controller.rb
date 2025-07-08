@@ -8,6 +8,7 @@ class EquipmentController < ApplicationController
 
   # GET /equipment/1 or /equipment/1.json
   def show
+    @equipment = Equipment.find(params[:id])
   end
 
   # GET /equipment/new
