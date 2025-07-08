@@ -8,6 +8,7 @@ class CollaboratorsController < ApplicationController
 
   # GET /collaborators/1 or /collaborators/1.json
   def show
+    @equipment = Equipment.find(params[:id])
   end
 
   # GET /collaborators/new

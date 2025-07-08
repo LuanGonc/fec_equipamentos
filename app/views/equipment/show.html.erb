@@ -1,10 +1,42 @@
-<p style="color: green"><%= notice %></p>
+<h3>Histórico de Empréstimos</h3>
 
-<%= render @equipment %>
-
-<div>
-  <%= link_to "Edit this equipment", edit_equipment_path(@equipment) %> |
-  <%= link_to "Back to equipment", equipment_index_path %>
-
-  <%= button_to "Destroy this equipment", @equipment, method: :delete %>
-</div>
+<% if @equipment.loans.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Ação</th>
+        <th>Data</th>
+        <th>Colaborador</th>
+        <th>Motivo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @equipment.loans.order(created_at: :desc).each do |loan| %>
+        <tr>
+          <td><%= loan.loan_action.titleize %></td>
+          <td>
+            <%=
+              case loan.loan_action
+              when "emprestimo" then loan.loan_date
+              when "devolucao" then loan.return_date
+              when "baixa" then loan.discard_date
+              end
+            %>
+          </td>
+          <td><%= loan.collaborator.name %></td>
+          <td>
+            <%=
+              case loan.loan_action
+              when "devolucao" then loan.return_reason
+              when "baixa" then loan.discard_reason
+              else "-"
+              end
+            %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Este equipamento ainda não tem histórico de empréstimos.</p>
+<% end %>

@@ -41,6 +41,8 @@ Collaborator.create!(
     department: "Operacoes"
 )
 
+#preenchimento dos campos feito por IA
+
 Equipment.create!(
   brand: "Dell",
   model: "XPS 15",
