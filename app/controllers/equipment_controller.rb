@@ -3,7 +3,8 @@ class EquipmentController < ApplicationController
 
   # GET /equipment or /equipment.json
   def index
-    @equipments = Equipment.all
+    @q = Equipment.ransack(params[:q])
+    @equipments = @q.result(distinct: true)     
   end
 
   # GET /equipment/1 or /equipment/1.json

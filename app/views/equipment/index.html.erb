@@ -3,6 +3,45 @@
 <h1 align="center">Equipamentos</h1>
 
 <div align="center">
+  <%= search_form_for @q do |e| %>
+    <div>
+      <%= e.label :status_eq, "Status" %>
+      <%= e.select :status_eq, Equipment.statuses.keys.map { |s| [s.titleize, s] }, include_blank: "Todos" %>
+    </div>
+    <div>
+      <%= e.label :brand_cont, "marca" %>
+      <%= e.search_field :brand_cont %>
+    </div>
+    <div>
+      <%= e.label :model_cont, "modelo" %>
+      <%= e.search_field :model_cont %>
+    </div>
+    <div>
+      <%= e.label :patrimony_number_cont, "Nº Patrimônio" %>
+      <%= e.search_field :patrimony_number_cont %>
+    </div>
+    <div>
+      <%= e.label :purchase_date_lteq, "Antes de" %>
+      <%= e.search_field :purchase_date_lteq %>
+    </div>
+
+    <div>
+      <%= e.label :purchase_date_gteq, "Depois de" %>
+      <%= e.search_field :purchase_date_gteq %>
+    </div>
+
+    <div>
+      <%= e.label :purchase_date_eq, "No dia" %>
+      <%= e.search_field :purchase_date_eq %>
+    </div>
+    <div>
+      <%= e.submit "Filtrar" %>
+    </div>
+    <%= link_to "Limpar Filtros", url_for(only_path: false, overwrite_params: nil) %> <%#"only_path: false" inclui a url completa e "overwrite_params: nil" remove os parametros %>
+  <% end %>
+</div>
+
+<div align="center">
   <table border="1px">
     <thead>
       <tr>
@@ -18,17 +57,17 @@
       </tr>
     </thead>
     <tbody>
-      <% @equipments.each do |equipment| %>
+      <% @equipments.each do |e| %>
         <tr>
-          <td><%= link_to equipment.identifier, equipment %></td>
-          <td><%= equipment.brand %></td>
-          <td><%= equipment.model %></td>
-          <td><%= equipment.patrimony_number %></td>
-          <td><%= equipment.serial_number %></td>
-          <td><%= equipment.purchase_date.strftime("%d/%m/%Y") %></td>
-          <td><%= equipment.manufacture_date.strftime("%d/%m/%Y") %></td>
-          <td><%= equipment.description %></td>
-          <td><%= equipment.status %></td>
+          <td><%= link_to e.identifier, equipment_path(e) %></td>
+          <td><%= e.brand %></td>
+          <td><%= e.model %></td>
+          <td><%= e.patrimony_number %></td>
+          <td><%= e.serial_number %></td>
+          <td><%= e.purchase_date.strftime("%d/%m/%Y") %></td>
+          <td><%= e.manufacture_date.strftime("%d/%m/%Y") %></td>
+          <td><%= e.description %></td>
+          <td><%= e.status %></td>
         </tr>
       <% end %>
     </tbody>

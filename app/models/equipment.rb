@@ -1,5 +1,10 @@
 class Equipment < ApplicationRecord
-    has_many :loans, dependent: :destroy
+  has_many :loans, dependent: :destroy
+
+    def self.ransackable_attributes(auth_object = nil)
+      ["brand", "created_at", "identifier", "model", "patrimony_number", "purchase_date", "status"]
+  end
+
 
     enum status: {
     disponível: "disponivel",
