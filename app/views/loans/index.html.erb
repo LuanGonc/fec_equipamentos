@@ -1,14 +1,30 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Loans</h1>
+<h1 align="center">Empréstimos</h1>
 
-<div id="loans">
-  <% @loans.each do |loan| %>
-    <%= render loan %>
-    <p>
-      <%= link_to "Show this loan", loan %>
-    </p>
-  <% end %>
+<div align="center">
+  <table border="1px">
+    <thead>
+      <tr>
+        <th>Equipamento</th>
+        <th>Colaborador</th>
+        <th>Tipo</th>
+        <th>Data Empréstimo</th>
+        <th>Data Devolução</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @loans.each do |loan| %>
+        <tr>
+          <td><%= link_to loan.equipment.identifier, loan.equipment %></td>
+          <td><%= link_to loan.collaborator.name, loan.collaborator %></td>
+          <td><%= loan.loan_action %></td>
+          <td><%= loan.loan_date || "-"%></td>
+          <td><%= loan.return_date || "-"%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "Novo empréstimo", new_loan_path %>
 </div>
-
-<%= link_to "New loan", new_loan_path %>

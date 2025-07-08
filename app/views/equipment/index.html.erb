@@ -1,14 +1,38 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Equipment</h1>
+<h1 align="center">Equipamentos</h1>
 
-<div id="equipment">
-  <% @equipment.each do |equipment| %>
-    <%= render equipment %>
-    <p>
-      <%= link_to "Show this equipment", equipment %>
-    </p>
-  <% end %>
+<div align="center">
+  <table border="1px">
+    <thead>
+      <tr>
+        <th>Identificador</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Nº Patrimônio</th>
+        <th>Nº Série</th>
+        <th>Data Compra</th>
+        <th>Data Fabricação</th>
+        <th>Descrição</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @equipments.each do |equipment| %>
+        <tr>
+          <td><%= link_to equipment.identifier, equipment %></td>
+          <td><%= equipment.brand %></td>
+          <td><%= equipment.model %></td>
+          <td><%= equipment.patrimony_number %></td>
+          <td><%= equipment.serial_number %></td>
+          <td><%= equipment.purchase_date.strftime("%d/%m/%Y") %></td>
+          <td><%= equipment.manufacture_date.strftime("%d/%m/%Y") %></td>
+          <td><%= equipment.description %></td>
+          <td><%= equipment.status %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "Novo equipamento", new_equipment_path %>
 </div>
-
-<%= link_to "New equipment", new_equipment_path %>

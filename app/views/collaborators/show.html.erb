@@ -1,42 +1,45 @@
 <h3 align="center">Histórico de Empréstimos</h3>
-
-<% if @collaborator.loans.any? %>
-  <table border="1px" align="center">
-    <thead>
-      <tr>
-        <th>Ação</th>
-        <th>Data</th>
-        <th>Equipamento</th>
-        <th>Motivo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @collaborator.loans.order(created_at: :desc).each do |loan| %>
+<div align="center">
+  <% if @collaborator.loans.any? %>
+    <table border="1px" align="center">
+      <thead>
         <tr>
-          <td> <%= loan.loan_action.titleize %></td>
-          <td>
-            <%= 
-              case loan.loan_action
-              when "emprestimo" then loan.loan_date
-              when "devolucao"  then loan.return_date
-              when "baixa"      then loan.discard_date
-              end
-            %>
-          </td>
-          <td> <%= loan.equipment.identifier %> </td>
-          <td>
-            <%= 
-            case loan.loan_action
-            when "devolucao"  then loan.return_reason
-            when "baixa"      then loan.discard_reason
-            else "-"
-            end
-            %>
-          </td>
+          <th>Ação</th>
+          <th>Data</th>
+          <th>Equipamento</th>
+          <th>Motivo</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>Este Colaborador ainda nao fez um empréstimo</p>
-<% end %>
+      </thead>
+      <tbody>
+        <% @collaborator.loans.order(created_at: :desc).each do |loan| %>
+          <tr>
+            <td> <%= loan.loan_action.titleize %></td>
+            <td>
+              <%= 
+                case loan.loan_action
+                when "emprestimo" then loan.loan_date
+                when "devolucao"  then loan.return_date
+                when "baixa"      then loan.discard_date
+                end
+              %>
+            </td>
+            <td> <%= loan.equipment.identifier %> </td>
+            <td>
+              <%= 
+              case loan.loan_action
+              when "devolucao"  then loan.return_reason
+              when "baixa"      then loan.discard_reason
+              else "-"
+              end
+              %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>Este Colaborador ainda nao fez um empréstimo</p>
+  <% end %>
+  <br>
+  <%= link_to 'Voltar para colaboradores', collaborators_path %>
+</div>

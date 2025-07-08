@@ -1,14 +1,26 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Collaborators</h1>
+<h1 align="center">Colabordores</h1>
 
-<div id="collaborators">
-  <% @collaborators.each do |collaborator| %>
-    <%= render collaborator %>
-    <p>
-      <%= link_to "Show this collaborator", collaborator %>
-    </p>
-  <% end %>
+<div align="center">
+  <table border="1px">
+    <thead>
+      <tr>
+        <th> Nome   </th>
+        <th> Email  </th>
+        <th> Setor  </th>
+      </tr>
+    </thead>
+    <% @collaborators.each do |collaborator| %>
+      <tr>
+        <td> <%= link_to collaborator.name, collaborator %> </td>
+        <td> <%= collaborator.email %> </td>
+        <td> <%= collaborator.department %> </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= link_to "Novo colaborador", new_collaborator_path %>
+
 </div>
 
-<%= link_to "New collaborator", new_collaborator_path %>
