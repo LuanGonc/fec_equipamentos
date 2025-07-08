@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  brand: MyString
+  model: MyString
+  patrimony_number: MyString
+  serial_number: MyString
+  identifier: MyString
+  purchase_date: 2025-07-07
+  manufacture_date: 2025-07-07
+  description: MyText
+  status: MyString
+
+two:
+  brand: MyString
+  model: MyString
+  patrimony_number: MyString
+  serial_number: MyString
+  identifier: MyString
+  purchase_date: 2025-07-07
+  manufacture_date: 2025-07-07
+  description: MyText
+  status: MyString
