@@ -1,4 +1,6 @@
 class Equipment < ApplicationRecord
+    has_many :loans, dependent: :destroy
+
     enum status: {
     disponível: "disponível",
     emprestado: "emprestado",

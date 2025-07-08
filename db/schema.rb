@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_08_004112) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_08_010234) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -39,4 +39,21 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_004112) do
     t.index ["serial_number"], name: "index_equipment_on_serial_number", unique: true
   end
 
+  create_table "loans", force: :cascade do |t|
+    t.bigint "equipment_id", null: false
+    t.bigint "collaborator_id", null: false
+    t.string "action", null: false
+    t.date "loan_date"
+    t.date "return_date"
+    t.text "return_reason"
+    t.date "discard_date"
+    t.text "discard_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["collaborator_id"], name: "index_loans_on_collaborator_id"
+    t.index ["equipment_id"], name: "index_loans_on_equipment_id"
+  end
+
+  add_foreign_key "loans", "collaborators"
+  add_foreign_key "loans", "equipment"
 end

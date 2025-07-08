@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  equipment: one
+  collaborator: one
+  action: MyString
+  loan_date: 2025-07-07
+  return_date: 2025-07-07
+  return_reason: MyText
+  discard_date: 2025-07-07
+  discard_reason: MyText
+
+two:
+  equipment: two
+  collaborator: two
+  action: MyString
+  loan_date: 2025-07-07
+  return_date: 2025-07-07
+  return_reason: MyText
+  discard_date: 2025-07-07
+  discard_reason: MyText

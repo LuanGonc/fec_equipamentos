@@ -1,0 +1,57 @@
+<%= form_with(model: loan) do |form| %>
+  <% if loan.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(loan.errors.count, "error") %> prohibited this loan from being saved:</h2>
+
+      <ul>
+        <% loan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :equipment_id, style: "display: block" %>
+    <%= form.text_field :equipment_id %>
+  </div>
+
+  <div>
+    <%= form.label :collaborator_id, style: "display: block" %>
+    <%= form.text_field :collaborator_id %>
+  </div>
+
+  <div>
+    <%= form.label :action, style: "display: block" %>
+    <%= form.text_field :action %>
+  </div>
+
+  <div>
+    <%= form.label :loan_date, style: "display: block" %>
+    <%= form.date_field :loan_date %>
+  </div>
+
+  <div>
+    <%= form.label :return_date, style: "display: block" %>
+    <%= form.date_field :return_date %>
+  </div>
+
+  <div>
+    <%= form.label :return_reason, style: "display: block" %>
+    <%= form.text_area :return_reason %>
+  </div>
+
+  <div>
+    <%= form.label :discard_date, style: "display: block" %>
+    <%= form.date_field :discard_date %>
+  </div>
+
+  <div>
+    <%= form.label :discard_reason, style: "display: block" %>
+    <%= form.text_area :discard_reason %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
