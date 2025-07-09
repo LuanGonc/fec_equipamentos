@@ -12,7 +12,7 @@ class Loan < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["collaborator"]
+    ["collaborator", "equipment"]
   end
 
 

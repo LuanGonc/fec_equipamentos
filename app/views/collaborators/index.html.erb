@@ -3,6 +3,32 @@
 <h1 align="center">Colabordores</h1>
 
 <div align="center">
+  <%= search_form_for @q do |e| %>
+    <div>
+      <%= e.label :name_cont, "Nome" %>
+      <%= e.search_field :name_cont %>
+    </div>
+    <div>
+      <%= e.label :email_cont, "Email" %>
+      <%= e.search_field :email_cont %>
+    </div>
+    <div>
+      <%= e.label :department_cont, "Setor" %>
+      <%= e.search_field :department_cont %>
+    </div>
+    <div>
+      <%= e.submit "Filtrar" %>
+    </div>
+    <%= link_to "Limpar Filtros", url_for(only_path: false, overwrite_params: nil) %> <%#"only_path: false" inclui a url completa e "overwrite_params: nil" remove os parametros %>
+  <% end %>
+</div>
+
+
+
+
+
+
+<div align="center">
   <table border="1px">
     <thead>
       <tr>

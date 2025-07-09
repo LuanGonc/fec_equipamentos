@@ -3,7 +3,8 @@ class CollaboratorsController < ApplicationController
 
   # GET /collaborators or /collaborators.json
   def index
-    @collaborators = Collaborator.all
+    @q = Collaborator.ransack(params[:q])
+    @collaborators = @q.result(distinct: true)     
   end
 
   # GET /collaborators/1 or /collaborators/1.json

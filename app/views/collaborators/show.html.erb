@@ -22,6 +22,10 @@
       <%= e.label :created_at_eq, "No dia" %>
       <%= e.date_field :created_at_eq %>
     </div>
+    <div>
+      <%= e.label :equipment_identifier_cont, "Equipamento (ID)" %>
+      <%= e.search_field :equipment_identifier_cont %>
+    </div>
 
     <div>
       <%= e.submit "Filtrar" %>
@@ -30,12 +34,6 @@
   <% end %>
 
 </div>
-
-
-
-
-
-
 
 
 
