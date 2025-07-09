@@ -52,14 +52,24 @@ class EquipmentController < ApplicationController
   end
 
   # DELETE /equipment/1 or /equipment/1.json
-  def destroy
-    @equipment.destroy!
+def destroy
+  respond_to do |format|
+    if @equipment.loans.any?
+      format.html { redirect_to equipment_path(@equipment), alert: "Não é possível excluir um equipamento que já foi emprestado." }
+      format.json { render json: { error: "Equipamento com empréstimos não pode ser excluído." }, status: :unprocessable_entity }
 
-    respond_to do |format|
-      format.html { redirect_to equipment_index_path, status: :see_other, notice: "Equipment was successfully destroyed." }
+    elsif @equipment.status != "disponivel"
+      format.html { redirect_to equipment_path(@equipment), alert: "Só é possível excluir equipamentos disponíveis." }
+      format.json { render json: { error: "Equipamento não disponível para exclusão." }, status: :unprocessable_entity }
+
+    else
+      @equipment.destroy!
+      format.html { redirect_to equipment_index_path, status: :see_other, notice: "Equipamento apagado com sucesso." }
       format.json { head :no_content }
     end
   end
+end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

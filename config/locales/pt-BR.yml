@@ -26,6 +26,14 @@ pt-BR:
         return_reason: Motivo da devolução
         discard_date: Data da baixa
         discard_reason: Justificativa da baixa
+  helpers:
+    submit:
+      collaborator:
+        create: "Cadastrar Colaborator"
+        update: "Atualizar Colaborador"
+      equipment:
+        create: "Cadastrar Nootebook"
+        update: "Atualizar Nootebook"
 
   errors:
     format: "%{attribute} %{message}"

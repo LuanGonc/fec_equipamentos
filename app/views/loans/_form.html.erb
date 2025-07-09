@@ -1,3 +1,5 @@
+
+
 <%= form_with(model: loan) do |form| %>
   <% if loan.errors.any? %>
     <div style="color: red">
@@ -10,7 +12,7 @@
   <% end %>
 
   <div>
-    <%= form.label :equipment_id, "Equipamento" %>
+    <%= form.label :equipment_id, "Notebook" %>
 <%= form.collection_select :equipment_id, Equipment.all, :id, :identifier, prompt: "Selecione um equipamento" %>
   </div>
 

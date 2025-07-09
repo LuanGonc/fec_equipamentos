@@ -1,5 +1,19 @@
 <h3 align="center">Histórico de Empréstimos</h3>
 
+
+<div>
+  <h3>Informações do Colaborador</h3>
+  <ul>
+    <li>Nome: <%= @collaborator.name %></li>
+    <li>Email: <%= @collaborator.email %></li>
+    <li>Setor: <%= @collaborator.department %></li>
+  </ul>
+  <%= link_to "Editar Colaborador", edit_collaborator_path(@collaborator) %>
+  <%= button_to "Deletar Colaborador", collaborator_path(@collaborator), method: :delete, data: { confirm: "Tem certeza que deseja excluir este colaborador?" } %>
+</div>
+
+
+
 <div align="center">
 
   <%= search_form_for @q, url: collaborator_path(@collaborator) do |e| %>

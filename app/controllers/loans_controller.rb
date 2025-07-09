@@ -21,19 +21,61 @@ class LoansController < ApplicationController
   end
 
   # POST /loans or /loans.json
-  def create
-    @loan = Loan.new(loan_params)
+def create
+  @loan = Loan.new(loan_params)
+  @equipment = Equipment.find(@loan.equipment_id)
 
-    respond_to do |format|
-      if @loan.save
-        format.html { redirect_to @loan, notice: "Loan was successfully created." }
-        format.json { render :show, status: :created, location: @loan }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @loan.errors, status: :unprocessable_entity }
-      end
+  case @loan.loan_action
+  when "emprestimo"
+    if @equipment.status != "disponivel"
+      flash[:alert] = "O equipamento não está disponível"
+      redirect_to new_loan_path and return
+    end
+
+    if @loan.loan_date.blank?
+      flash[:alert] = "A data do empréstimo não pode ficar em branco."
+      redirect_to new_loan_path and return
+    end
+
+    @equipment.update(status: "emprestado")
+
+  when "devolucao"
+    if @equipment.status != "emprestado"
+      flash[:alert] = "Só é possível devolver um equipamento que está emprestado."
+      redirect_to new_loan_path and return
+    end
+
+    if @loan.return_date.blank? || @loan.return_reason.blank?
+      flash[:alert] = "Data e motivo da devolução são obrigatórios."
+      redirect_to new_loan_path and return
+    end
+
+    @equipment.update(status: "disponivel")
+
+  when "baixa"
+    if @equipment.status != "emprestado"
+      flash[:alert] = "Só é possível dar baixa em um equipamento emprestado."
+      redirect_to new_loan_path and return
+    end
+
+    if @loan.discard_date.blank? || @loan.discard_reason.blank?
+      flash[:alert] = "Data e justificativa da baixa são obrigatórias."
+      redirect_to new_loan_path and return
+    end
+
+    @equipment.update(status: "indisponivel")
+  end
+
+  respond_to do |format|
+    if @loan.save
+      format.html { redirect_to @loan, notice: "Ação realizada com sucesso." }
+      format.json { render :show, status: :created, location: @loan }
+    else
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @loan.errors, status: :unprocessable_entity }
     end
   end
+end
 
   # PATCH/PUT /loans/1 or /loans/1.json
   def update
