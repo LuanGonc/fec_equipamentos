@@ -21,7 +21,4 @@ class Equipment < ApplicationRecord
   
   validates :status, inclusion: { in: statuses.keys }
 
-  # Validação de formato (exemplo básico, pode ajustar)
-  #validates :identifier, format: { with: /\A[A-Z0-9\-]+\z/,
-   #                                message: "só pode conter letras maiúsculas, números e hífen" }
 end
