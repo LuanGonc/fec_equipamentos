@@ -10,4 +10,22 @@ class Collaborator < ApplicationRecord
         ["loans"]
     end
 
+
+
+    validates :name, :email, :department, presence: true
+    validate :valid_email_format  # Usando nossa validação personalizada
+
+    private
+
+    def valid_email_format
+        # Verifica se está em branco
+        return if email.blank?  
+
+        
+        unless URI::MailTo::EMAIL_REGEXP.match?(email) #regex do ruby para formato do email
+            errors.add(:email, "não é um formato válido")
+            return
+        end
+    end
+
 end

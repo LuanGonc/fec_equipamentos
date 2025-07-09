@@ -51,7 +51,15 @@
       <tbody>
         <% @filtered_loans.order(created_at: :desc).each do |loan| %>
           <tr>
-            <td> <%= loan.loan_action.titleize %></td>
+            <td>
+              <%=
+                case loan.loan_action
+                when "emprestimo" then "Empréstimo"
+                when "devolucao"  then "Devolução"
+                when "baixa"      then "Devolução"
+                end 
+              %>
+            </td>
             <td>
               <%= 
                 case loan.loan_action

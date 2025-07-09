@@ -52,7 +52,7 @@ Equipment.create!(
   purchase_date: "2024-01-10",
   manufacture_date: "2023-12-01",
   description: "Notebook Dell XPS 15, 16GB RAM, SSD 512GB",
-  status: "disponivel"
+  status: "Disponível"
 )
 
 Equipment.create!(
@@ -64,7 +64,7 @@ Equipment.create!(
   purchase_date: "2024-02-15",
   manufacture_date: "2024-01-20",
   description: "MacBook Pro 14'' com chip M2, 16GB RAM, 1TB SSD",
-  status: "disponivel"
+  status: "Disponível"
 )
 
 # Equipamentos emprestados
@@ -77,7 +77,7 @@ Equipment.create!(
   purchase_date: "2023-11-05",
   manufacture_date: "2023-09-10",
   description: "Notebook Lenovo ThinkPad T490, 8GB RAM, SSD 256GB",
-  status: "disponivel"
+  status: "Disponível"
 )
 
 Equipment.create!(
@@ -89,7 +89,7 @@ Equipment.create!(
   purchase_date: "2024-03-20",
   manufacture_date: "2024-02-01",
   description: "Notebook HP EliteBook 840, 16GB RAM, SSD 512GB",
-  status: "disponivel"
+  status: "Disponível"
 )
 
 # Equipamentos indisponíveis
@@ -102,7 +102,7 @@ Equipment.create!(
   purchase_date: "2023-10-12",
   manufacture_date: "2023-08-15",
   description: "Notebook Asus ZenBook 14, 12GB RAM, SSD 256GB",
-  status: "disponivel"
+  status: "Disponível"
 )
 
 Equipment.create!(
@@ -114,7 +114,7 @@ Equipment.create!(
   purchase_date: "2024-04-05",
   manufacture_date: "2024-03-01",
   description: "Notebook Acer Swift 3, 8GB RAM, SSD 512GB",
-  status: "disponivel"
+  status: "Disponível"
 )
 
 # Equipamento com configuração avançada
@@ -127,7 +127,7 @@ Equipment.create!(
   purchase_date: "2024-05-01",
   manufacture_date: "2024-04-10",
   description: "Surface Laptop 5, 32GB RAM, 1TB SSD, Touchscreen",
-  status: "disponivel"
+  status: "Disponível"
 )
 
 # Equipamento mais antigo
@@ -140,5 +140,5 @@ Equipment.create!(
   purchase_date: "2018-06-15",
   manufacture_date: "2018-04-20",
   description: "Notebook Dell Latitude E7440, 8GB RAM, HDD 500GB",
-  status: "disponivel"
+  status: "Disponível"
 )

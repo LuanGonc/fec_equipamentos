@@ -1,0 +1,35 @@
+pt-BR:
+  activerecord:
+    models:
+      equipment: Equipamento
+      collaborator: Colaborador
+      loan: Empréstimo
+    attributes:
+      equipment:
+        brand: Marca
+        model: Modelo
+        patrimony_number: Número de patrimônio
+        serial_number: Número de série
+        identifier: Identificador
+        purchase_date: Data de compra
+        manufacture_date: Data de fabricação
+        description: Descrição
+        status: Situação
+      collaborator:
+        name: Nome
+        email: E-mail
+        department: Setor
+      loan:
+        loan_action: Ação
+        loan_date: Data do empréstimo
+        return_date: Data da devolução
+        return_reason: Motivo da devolução
+        discard_date: Data da baixa
+        discard_reason: Justificativa da baixa
+
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "não pode ficar em branco"
+      taken: "já está em uso"
+      invalid: "não é válido"

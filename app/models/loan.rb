@@ -37,23 +37,23 @@ class Loan < ApplicationRecord
     case loan_action
     when "emprestimo"
       if loan_date.blank?
-        errors.add(:loan_date, "não pode ficar em branco")
+        errors.add(:loan_date, "Não pode ficar em branco")
       end
 
     when "devolucao" 
       if return_date.blank?
-        errors.add(:return_date, "não pode ficar em branco")
+        errors.add(:return_date, "Não pode ficar em branco")
       end
       if return_reason.blank?
-        errors.add(:return_reason, "não pode ficar em branco")
+        errors.add(:return_reason, "Não pode ficar em branco")
       end
 
     when "baixa"
       if discard_date.blank?
-        errors.add(:discard_date, "não pode ficar em branco")
+        errors.add(:discard_date, "Não pode ficar em branco")
       end
       if discard_reason.blank?
-        errors.add(:discard_date, "não pode ficae em branco")
+        errors.add(:discard_date, "Não pode ficae em branco")
       end
     end
   end

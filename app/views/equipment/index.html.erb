@@ -67,7 +67,7 @@
           <td><%= e.purchase_date.strftime("%d/%m/%Y") %></td>
           <td><%= e.manufacture_date.strftime("%d/%m/%Y") %></td>
           <td><%= e.description %></td>
-          <td><%= e.status %></td>
+          <td><%= e.status_before_type_cast %></td> <%#assim ele exibe o valor no banco, não da chave%>
         </tr>
       <% end %>
     </tbody>
