@@ -3,7 +3,8 @@ class LoansController < ApplicationController
 
   # GET /loans or /loans.json
   def index
-    @loans = Loan.all
+    @q = Loan.ransack(params[:q])
+    @loans = @q.result(distinct: true)   
   end
 
   # GET /loans/1 or /loans/1.json

@@ -6,4 +6,8 @@ class Collaborator < ApplicationRecord
         ["created_at", "department", "email", "id", "id_value", "name", "updated_at"]
     end
 
+    def self.ransackable_associations(auth_object = nil)
+        ["loans"]
+    end
+
 end

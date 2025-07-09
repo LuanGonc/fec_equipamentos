@@ -3,6 +3,42 @@
 <h1 align="center">Empréstimos</h1>
 
 <div align="center">
+
+  <%= search_form_for @q, url: loans_path do |l| %>
+    <div>
+      <%= l.label :loan_action_eq, "Ação" %>
+      <%= l.select :loan_action_eq, Loan.loan_actions.map { |k, v| [k.titleize, v] }, include_blank: "Todos" %>
+    </div>
+    <div>
+      <%= l.label :collaborator_name_cont, "Colaborador" %>
+      <%= l.search_field :collaborator_name_cont %>
+    </div>
+    <div>
+      <%= l.label :equipment_identifier_cont, "Equipamento" %>
+      <%= l.search_field :equipment_identifier_cont %>
+    </div>
+    <div>
+      <%= l.label :created_at_lteq, "Antes de" %>
+      <%= l.date_field :created_at_lteq %>
+    </div>
+    <div>
+      <%= l.label :created_at_gteq, "Depois de" %>
+      <%= l.date_field :created_at_gteq %>
+    </div>
+    <div>
+      <%= l.label :created_at_eq, "No dia" %>
+      <%= l.date_field :created_at_eq %>
+    </div>
+    <div>
+      <%= l.submit "Filtrar" %>
+      <%= link_to "Limpar", loans_path %>
+    </div>
+  <% end %>
+
+</div>
+
+
+<div align="center">
   <table border="1px">
     <thead>
       <tr>
@@ -16,8 +52,8 @@
     <tbody>
       <% @loans.each do |loan| %>
         <tr>
-          <td><%= link_to loan.equipment.identifier, loan.equipment %></td>
-          <td><%= link_to loan.collaborator.name, loan.collaborator %></td>
+          <td><%= link_to loan.equipment.identifier, equipment_path(loan.equipment) %></td>
+          <td><%= link_to loan.collaborator.name, collaborator_path(loan.collaborator) %></td>
           <td><%= loan.loan_action %></td>
           <td><%= loan.loan_date || "-"%></td>
           <td><%= loan.return_date || "-"%></td>
