@@ -53,7 +53,7 @@ class Loan < ApplicationRecord
         errors.add(:discard_date, "Não pode ficar em branco")
       end
       if discard_reason.blank?
-        errors.add(:discard_date, "Não pode ficae em branco")
+        errors.add(:discard_reason, "Não pode ficar em branco")
       end
     end
   end

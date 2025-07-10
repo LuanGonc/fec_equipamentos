@@ -2,7 +2,6 @@ require 'rails_helper'
 require 'shoulda-matchers'
 
 RSpec.describe Equipment, type: :model do
-  # Sujeito padrão usando FactoryBot
   subject { build(:equipment) }  # build não salva no banco
 
   # Teste de exemplo válido
