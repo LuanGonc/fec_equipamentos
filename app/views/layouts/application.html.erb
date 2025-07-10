@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FecEquipamentos</title>
+    <title>Notebooks Fec</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <div id="flash">
-      <% flash.each do |type, msg| %>
-        <div class="alert alert-<%= type %>">
-        <%= msg %>
-        </div>
-      <% end %>
-    </div>
+  <body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col" >
+    <!-- Cabeçalho -->
+    <%= render "shared/header" %>
+
+    <!-- Flashes -->
+    <%= render "shared/flash" %>
 
 
-    <%= yield %>
+    <main class=" prose flex-1 container mx-auto px-6 py-8">
+      <%= yield %>
+    </main>
+
+  </body>
+
+
   </body>
 </html>
