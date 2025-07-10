@@ -10,11 +10,11 @@
       <%= e.select :status_eq, Equipment.statuses.keys.map { |s| [s.titleize, s] }, include_blank: "Todos" %>
     </div>
     <div>
-      <%= e.label :brand_cont, "marca" %>
+      <%= e.label :brand_cont, "Marca" %>
       <%= e.search_field :brand_cont %>
     </div>
     <div>
-      <%= e.label :model_cont, "modelo" %>
+      <%= e.label :model_cont, "Modelo" %>
       <%= e.search_field :model_cont %>
     </div>
     <div>

@@ -70,3 +70,11 @@ group :test do
 end
 
 gem "rspec-rails", "~> 7.1"
+
+group :test do
+  gem 'shoulda-matchers', '~> 5.0'
+end
+
+group :test do
+  gem 'factory_bot_rails'
+end

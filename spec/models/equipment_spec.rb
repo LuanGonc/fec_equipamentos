@@ -1,64 +1,34 @@
 require 'rails_helper'
+require 'shoulda-matchers'
 
 RSpec.describe Equipment, type: :model do
-  it "é válido com todos os atributos obrigatórios" do
-    equipment = Equipment.new(
-      brand: "Dell",
-      model: "Inspiron",
-      patrimony_number: "12345",
-      serial_number: "SN001",
-      identifier: "EQ001",
-      purchase_date: Date.today,
-      status: "disponivel"
-    )
+  # Sujeito padrão usando FactoryBot
+  subject { build(:equipment) }  # build não salva no banco
 
-    expect(equipment).to be_valid
+  # Teste de exemplo válido
+  it "é válido com todos os atributos obrigatórios" do
+    expect(subject).to be_valid
   end
 
+  # Testes de presença
+  it { should validate_presence_of(:brand) }
+  it { should validate_presence_of(:model) }
+  it { should validate_presence_of(:patrimony_number) }
+  it { should validate_presence_of(:serial_number) }
+  it { should validate_presence_of(:identifier) }
+  it { should validate_presence_of(:purchase_date) }
+  it { should validate_presence_of(:status) }
 
-  ##Testes de Presence (não pode ficar em branco)
-        #atributos: brand, model, patrimony_number, serial_number, identifier, purchase_date, status
+  # Testes de unicidade (com registro pré-existente)
+  describe "validações de unicidade" do
+    let!(:existing_equip) { create(:equipment) }  # create salva no banco
 
-    it "é inválido sem marca (brand)" do
-        equipment = Equipment.new(brand: nil)
-        equipment.validate
-        expect(equipment.errors[:brand]).to include("não pode ficar em branco")
-    end
+    it { should validate_uniqueness_of(:patrimony_number).case_insensitive }
+    it { should validate_uniqueness_of(:serial_number).case_insensitive }
+    it { should validate_uniqueness_of(:identifier).case_insensitive }
+  end
 
-    it "é inválido sem modelo (model)" do
-        equipment = Equipment.new(model: nil)
-        equipment.validate
-        expect(equipment.errors[:model]).to include("não pode ficar em branco")
-    end
-
-    it "é inválido sem número de patrimonio (patrimony_number)" do
-        equipment = Equipment.new(patrimony_number: nil)
-        equipment.validate
-        expect(equipment.errors[:patrimony_number]).to include("não pode ficar em branco")
-    end
-
-    it "é inválido sem número de série (serial_number)" do
-        equipment = Equipment.new(serial_number: nil)
-        equipment.validate
-        expect(equipment.errors[:serial_number]).to include("não pode ficar em branco")
-    end
-
-    it "é inválido sem indentificador (identifier)" do
-        equipment = Equipment.new(identifier: nil)
-        equipment.validate
-        expect(equipment.errors[:identifier]).to include("não pode ficar em branco")
-    end
-
-    it "é inválido sem data de compra (purchase_date)" do
-        equipment = Equipment.new(purchase_date: nil)
-        equipment.validate
-        expect(equipment.errors[:purchase_date]).to include("não pode ficar em branco")
-    end    
-
-    it "é inválido sem status" do
-        equipment = Equipment.new(status: nil)
-        equipment.validate
-        expect(equipment.errors[:status]).to include("não pode ficar em branco")
-    end      
+  # Teste de associação
+  it { should have_many(:loans).dependent(:destroy) }
 
 end
