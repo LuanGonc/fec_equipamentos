@@ -4,7 +4,7 @@ require 'shoulda-matchers'
 RSpec.describe Collaborator, type: :model do
   subject { build(:collaborator) }
 
-  it "é válido com todos os atributos obrigatórios" do
+  it 'é válido com todos os atributos obrigatórios' do
     expect(subject).to be_valid
   end
 
@@ -12,7 +12,7 @@ RSpec.describe Collaborator, type: :model do
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:department) }
 
-  describe "validações de unicidade" do
+  describe 'validações de unicidade' do
     let!(:existing_colab) { create(:collaborator) }
 
     it { should validate_uniqueness_of(:email).case_insensitive }

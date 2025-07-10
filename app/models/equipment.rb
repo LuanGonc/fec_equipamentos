@@ -2,24 +2,20 @@ class Equipment < ApplicationRecord
   has_many :loans, dependent: :destroy
   before_validation :normalize_fields
 
-    def self.ransackable_attributes(auth_object = nil)
-      ["brand", "created_at", "identifier", "model", "patrimony_number", "purchase_date", "status"]
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[brand created_at identifier model patrimony_number purchase_date status]
   end
 
-
   enum status: {
-    disponivel: "Disponível",
-    emprestado: "Emprestado",
-    indisponivel: "Indisponível"
+    disponivel: 'Disponível',
+    emprestado: 'Emprestado',
+    indisponivel: 'Indisponível'
   }
 
-  
   validates :brand, :model, :patrimony_number, :serial_number, :identifier, :purchase_date, :status, presence: true
-
 
   validates :patrimony_number, :serial_number, :identifier, uniqueness: { case_sensitive: false }
 
-  
   validates :status, inclusion: { in: statuses.keys }
 
   private

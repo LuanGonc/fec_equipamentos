@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :collaborator do
-    name { "Fulano de Tal" }
+    name { 'Fulano de Tal' }
     sequence(:email) { |n| "fulano#{n}@empresa.com" }
-    department { "Financeiro" }
+    department { 'Financeiro' }
   end
 end

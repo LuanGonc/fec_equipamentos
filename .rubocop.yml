@@ -1,0 +1,6 @@
+AllCops:
+  DisabledByDefault: true  # Desativa todos os outros checks
+
+Layout/IndentationWidth:
+  Enabled: true
+  Width: 2  

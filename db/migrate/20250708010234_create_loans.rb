@@ -3,7 +3,7 @@ class CreateLoans < ActiveRecord::Migration[7.1]
     create_table :loans do |t|
       t.references :equipment, null: false, foreign_key: true
       t.references :collaborator, null: false, foreign_key: true
-      t.string :loan_action, null: false 
+      t.string :loan_action, null: false
       t.date :loan_date
       t.date :return_date
       t.text :return_reason
