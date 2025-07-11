@@ -62,7 +62,7 @@
           <td class="px-6 py-4 whitespace-nowrap">
             <%= link_to loan.collaborator.name, collaborator_path(loan.collaborator), class: "text-blue-600 hover:underline" %>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= loan.loan_action %></td>
+          <td class="px-6 py-4 whitespace-nowrap"><%= link_to loan.loan_action, loan_path(loan), class: "text-blue-600 hover:underline" %></td>
           <td class="px-6 py-4 whitespace-nowrap"><%= loan.loan_date || "-" %></td>
           <td class="px-6 py-4 whitespace-nowrap"><%= loan.return_date || "-" %></td>
         </tr>

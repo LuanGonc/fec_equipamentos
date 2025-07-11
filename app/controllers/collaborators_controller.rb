@@ -4,7 +4,8 @@ class CollaboratorsController < ApplicationController
   # GET /collaborators or /collaborators.json
   def index
     @q = Collaborator.ransack(params[:q])
-    @collaborators = @q.result(distinct: true).page(params[:page]).per(5)
+    @collaborators = @q.result(distinct: true)
+    #@collaborators = @q.result(distinct: true).page(params[:page]).per(4)
   end
 
   # GET /collaborators/1 or /collaborators/1.json

@@ -1,72 +1,117 @@
 
 
-<div>
-  <h3> informações do notebook</h3>
-    <ul>
-      <li> Identificador: <%= @equipment.identifier%></li>
-      <li> Marca: <%= @equipment.brand %></li>
-      <li> Modelo: <%= @equipment.model %></li>
-      <li> Nº Patrimônio: <%= @equipment.patrimony_number %></li>
-      <li> Nº Serie: <%= @equipment.serial_number %></li>
-      <li> Data de Compra: <%= @equipment.purchase_date.strftime("%d/%m/%Y") %></td>
-      <li> Data de Fabricação: <%= @equipment.manufacture_date.strftime("%d/%m/%Y") %></td>
-      <li> Descrição: <%= @equipment.description %></li>
-      <li> Status: <%= @equipment.status_before_type_cast %></li> <%#assim ele exibe o valor no banco, não da chave%>
-    </ul>
-      <%= link_to "Editar Notebook", edit_equipment_path(@equipment) %>
-      <%= button_to "Deletar Notebook", equipment_path(@equipment), method: :delete, data: { confirm: "Tem certeza que deseja excluir este notebook?" } %>
+<div class="max-w-xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+  <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
+    Informações do Notebook
+  </h3>
+
+  <ul class="space-y-4 text-gray-700">
+    <li>
+      <span class="font-semibold">Identificador:</span> <%= @equipment.identifier %>
+    </li>
+    <li>
+      <span class="font-semibold">Marca:</span> <%= @equipment.brand %>
+    </li>
+    <li>
+      <span class="font-semibold">Modelo:</span> <%= @equipment.model %>
+    </li>
+    <li>
+      <span class="font-semibold">Nº Patrimônio:</span> <%= @equipment.patrimony_number %>
+    </li>
+    <li>
+      <span class="font-semibold">Nº Serie:</span> <%= @equipment.serial_number %>
+    </li>
+    <li>
+      <span class="font-semibold">Data de Compra:</span> <%= @equipment.purchase_date.strftime("%d/%m/%Y") %>
+    </li>
+    <li>
+      <span class="font-semibold">Data de Fabricação:</span> <%= @equipment.manufacture_date.strftime("%d/%m/%Y") %>
+    </li>
+    <li>
+      <span class="font-semibold">Descrição:</span> <%= @equipment.description %>
+    </li>
+    <li>
+      <span class="font-semibold">Status:</span> <%= @equipment.status_before_type_cast %>
+    </li>
+  </ul>
+
+  <div class="mt-6 flex justify-between">
+    <%= link_to "Editar Notebook", edit_equipment_path(@equipment),
+      class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+
+    <%= button_to "Deletar Notebook", equipment_path(@equipment),
+      method: :delete,
+      data: { confirm: "Tem certeza que deseja excluir este notebook?" },
+      class: "bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded" %>
+  </div>
 </div>
 
 
 
-<h3 align="center">Histórico de Empréstimos</h3>
-<div align="center">
-  <%= search_form_for @q, url: equipment_path(@equipment) do |emp| %>
+
+
+<div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
+  <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 text-center">
+    Histórico de Empréstimos
+  </h3>
+
+  <%= search_form_for @q, url: equipment_path(@equipment), class: "grid grid-cols-1 md:grid-cols-3 gap-4" do |emp| %>
+    <div>
+      <%= emp.label :loan_action_eq, "Ação", class: "block text-sm font-medium text-gray-700" %>
+      <%= emp.select :loan_action_eq, Loan.loan_actions.map { |k, v| [k.titleize, v] }, { include_blank: "Todos" }, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+    </div>
 
     <div>
-      <%= emp.label :loan_action_eq, "Ação" %>
-      <%= emp.select :loan_action_eq, Loan.loan_actions.map { |k, v| [k.titleize, v] }, include_blank: "Todos" %>
+      <%= emp.label :collaborator_name_cont, "Colaborador", class: "block text-sm font-medium text-gray-700" %>
+      <%= emp.search_field :collaborator_name_cont, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
+
     <div>
-      <%= emp.label :collaborator_name_cont, "Colaborador" %>
-      <%= emp.search_field :collaborator_name_cont %>
+      <%= emp.label :created_at_lteq, "Antes de", class: "block text-sm font-medium text-gray-700" %>
+      <%= emp.date_field :created_at_lteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
+
     <div>
-      <%= emp.label :created_at_lteq, "Antes de" %>
-      <%= emp.date_field :created_at_lteq %>
+      <%= emp.label :created_at_gteq, "Depois de", class: "block text-sm font-medium text-gray-700" %>
+      <%= emp.date_field :created_at_gteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
+
     <div>
-      <%= emp.label :created_at_gteq, "Depois de" %>
-      <%= emp.date_field :created_at_gteq %>
+      <%= emp.label :created_at_eq, "No dia", class: "block text-sm font-medium text-gray-700" %>
+      <%= emp.date_field :created_at_eq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
-    <div>
-      <%= emp.label :created_at_eq, "No dia" %>
-      <%= emp.date_field :created_at_eq %>
-    </div>
-    <div>
-      <%= emp.submit "Filtrar" %>
-      <%= link_to "Limpar", equipment_path(@equipment) %>
+
+    <div class="md:col-span-3 flex justify-start items-center gap-4 mt-4">
+      <%= emp.submit "Filtrar", class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+      <%= link_to "Limpar", equipment_path(@equipment), class: "text-gray-600 underline hover:text-gray-900" %>
     </div>
 
   <% end %>
 </div>
 
-<div align="center">
+
+
+
+<div class="max-w-5xl mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
+  <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 text-center">
+    Histórico de Empréstimos
+  </h3>
+
   <% if @filtered_loans.any? %>
-    <table border="1px" align="center">
-      <thead>
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-100">
         <tr>
-          <th>Ação</th>
-          <th>Data</th>
-          <th>Colaborador</th>
-          <th>Motivo</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Ação</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Data</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Colaborador</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Motivo</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="bg-white divide-y divide-gray-200">
         <% @filtered_loans.order(created_at: :desc).each do |loan| %>
-          <tr>
-            <td><%= loan.loan_action.titleize %></td>
-            <td>
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap"><%= loan.loan_action.titleize %></td>
+            <td class="px-6 py-4 whitespace-nowrap">
               <%=
                 case loan.loan_action
                 when "emprestimo" then loan.loan_date
@@ -75,8 +120,8 @@
                 end
               %>
             </td>
-            <td><%= loan.collaborator.name %></td>
-            <td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= loan.collaborator.name %></td>
+            <td class="px-6 py-4 whitespace-nowrap">
               <%=
                 case loan.loan_action
                 when "devolucao"  then loan.return_reason
@@ -90,6 +135,10 @@
       </tbody>
     </table>
   <% else %>
-    <p>Este notebook ainda não tem histórico de empréstimos.</p>
+    <p class="text-gray-600 py-4 text-center">Este notebook ainda não tem histórico de empréstimos.</p>
   <% end %>
+
+  <div class="mt-6 text-right">
+    <%= link_to 'Voltar para equipamentos', equipment_index_path, class: "inline-block bg-gray-600 text-white font-semibold py-2 px-4 rounded hover:bg-gray-700" %>
+  </div>
 </div>
