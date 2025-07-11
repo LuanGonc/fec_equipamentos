@@ -1,58 +1,59 @@
+<div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800"><%= loan.persisted? ? "Editar" : "Novo" %> Empréstimo</h2>
 
+  <%= form_with(model: loan) do |form| %>
+    <% if loan.errors.any? %>
+      <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+        <ul class="list-disc list-inside">
+          <% loan.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-<%= form_with(model: loan) do |form| %>
-  <% if loan.errors.any? %>
-    <div style="color: red">
-      <ul>
-        <% loan.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class="mb-4">
+      <%= form.label :equipment_id, "Notebook", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.collection_select :equipment_id, Equipment.all, :id, :identifier, { prompt: "Selecione um equipamento" }, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :collaborator_id, "Colaborador", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.collection_select :collaborator_id, Collaborator.all, :id, :name, { prompt: "Selecione um colaborador" }, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :loan_action, "Tipo de Ação", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.select :loan_action, Loan.loan_actions.keys.map { |a| [a.titleize, a] }, { prompt: "Selecione a ação" }, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :loan_date, "Data de Empréstimo", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.date_field :loan_date, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :return_date, "Data de Devolução", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.date_field :return_date, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :return_reason, "Motivo da Devolução", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_area :return_reason, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :discard_date, "Data de Baixa", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.date_field :discard_date, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :discard_reason, "Motivo da Baixa", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_area :discard_reason, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mt-6">
+      <%= form.submit loan.persisted? ? "Atualizar" : "Salvar", class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-full" %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :equipment_id, "Notebook" %>
-<%= form.collection_select :equipment_id, Equipment.all, :id, :identifier, prompt: "Selecione um equipamento" %>
-  </div>
-
-  <div>
-    <%= form.label :collaborator_id, "Colaborador" %>
-    <%= form.collection_select :collaborator_id, Collaborator.all, :id, :name, prompt: "Selecione um colaborador" %>
-  </div>
-
-  <div>
-    <%= form.label :loan_action, "Tipo de Ação" %>
-    <%= form.select :loan_action, Loan.loan_actions.keys.map { |a| [a.titleize, a] }, prompt: "Selecione a ação" %>
-
-  </div>
-
-  <div>
-    <%= form.label :loan_date, style: "display: block" %>
-    <%= form.date_field :loan_date %>
-  </div>
-
-  <div>
-    <%= form.label :return_date, style: "display: block" %>
-    <%= form.date_field :return_date %>
-  </div>
-
-  <div>
-    <%= form.label :return_reason, style: "display: block" %>
-    <%= form.text_area :return_reason %>
-  </div>
-
-  <div>
-    <%= form.label :discard_date, style: "display: block" %>
-    <%= form.date_field :discard_date %>
-  </div>
-
-  <div>
-    <%= form.label :discard_reason, style: "display: block" %>
-    <%= form.text_area :discard_reason %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

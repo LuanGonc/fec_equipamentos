@@ -1,78 +1,90 @@
 <p style="color: green"><%= notice %></p>
 
-<h1 align="center">Notebooks</h1>
 
 
-<div align="center">
-  <%= search_form_for @q do |e| %>
+
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 text-center">Notebooks</h1>
+  <%= search_form_for @q, class: "grid grid-cols-1 md:grid-cols-3 gap-4" do |e| %>
     <div>
-      <%= e.label :status_eq, "Status" %>
-      <%= e.select :status_eq, Equipment.statuses.keys.map { |s| [s.titleize, s] }, include_blank: "Todos" %>
-    </div>
-    <div>
-      <%= e.label :brand_cont, "Marca" %>
-      <%= e.search_field :brand_cont %>
-    </div>
-    <div>
-      <%= e.label :model_cont, "Modelo" %>
-      <%= e.search_field :model_cont %>
-    </div>
-    <div>
-      <%= e.label :patrimony_number_cont, "Nº Patrimônio" %>
-      <%= e.search_field :patrimony_number_cont %>
-    </div>
-    <div>
-      <%= e.label :purchase_date_lteq, "Antes de" %>
-      <%= e.date_field :purchase_date_lteq %>
+      <%= e.label :status_eq, "Status", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.select :status_eq, Equipment.statuses.keys.map { |s| [s.titleize, s] }, { include_blank: "Todos" }, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
 
     <div>
-      <%= e.label :purchase_date_gteq, "Depois de" %>
-      <%= e.date_field :purchase_date_gteq %>
+      <%= e.label :brand_cont, "Marca", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.search_field :brand_cont, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
 
     <div>
-      <%= e.label :purchase_date_eq, "No dia" %>
-      <%= e.date_field :purchase_date_eq %>
+      <%= e.label :model_cont, "Modelo", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.search_field :model_cont, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
+
     <div>
-      <%= e.submit "Filtrar" %>
+      <%= e.label :patrimony_number_cont, "Nº Patrimônio", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.search_field :patrimony_number_cont, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
-    <%= link_to "Limpar Filtros", url_for(only_path: false, overwrite_params: nil) %> <%#"only_path: false" inclui a url completa e "overwrite_params: nil" remove os parametros %>
+
+    <div>
+      <%= e.label :purchase_date_lteq, "Antes de", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.date_field :purchase_date_lteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+    </div>
+
+    <div>
+      <%= e.label :purchase_date_gteq, "Depois de", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.date_field :purchase_date_gteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+    </div>
+
+    <div>
+      <%= e.label :purchase_date_eq, "No dia", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.date_field :purchase_date_eq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+    </div>
+
+    <div class="md:col-span-3 flex justify-start items-center gap-4 mt-4">
+      <%= e.submit "Filtrar", class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+      <%= link_to "Limpar Filtros", url_for(only_path: false, overwrite_params: nil), class: "text-gray-600 underline hover:text-gray-900" %>
+    </div>
   <% end %>
 </div>
 
-<div align="center">
-  <table border="1px">
-    <thead>
+
+
+<div class="max-w-7xl mx-auto mt-8 p-4 bg-white rounded-md shadow-md overflow-x-auto">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-100">
       <tr>
-        <th>Identificador</th>
-        <th>Marca</th>
-        <th>Modelo</th>
-        <th>Nº Patrimônio</th>
-        <th>Nº Série</th>
-        <th>Data Compra</th>
-        <th>Data Fabricação</th>
-        <th>Descrição</th>
-        <th>Status</th>
+        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Identificador</th>
+        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Marca</th>
+        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Modelo</th>
+        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Nº Patrimônio</th>
+        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Nº Série</th>
+        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Data Compra</th>
+        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Data Fabricação</th>
+        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Descrição</th>
+        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Status</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="bg-white divide-y divide-gray-200">
       <% @equipments.each do |e| %>
-        <tr>
-          <td><%= link_to e.identifier, equipment_path(e) %></td>
-          <td><%= e.brand %></td>
-          <td><%= e.model %></td>
-          <td><%= e.patrimony_number %></td>
-          <td><%= e.serial_number %></td>
-          <td><%= e.purchase_date.strftime("%d/%m/%Y") %></td>
-          <td><%= e.manufacture_date.strftime("%d/%m/%Y") %></td>
-          <td><%= e.description %></td>
-          <td><%= e.status_before_type_cast %></td> <%#assim ele exibe o valor no banco, não da chave%>
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-4 whitespace-nowrap">
+            <%= link_to e.identifier, equipment_path(e), class: "text-blue-600 hover:underline" %>
+          </td>
+          <td class="px-4 py-4 whitespace-nowrap"><%= e.brand %></td>
+          <td class="px-4 py-4 whitespace-nowrap"><%= e.model %></td>
+          <td class="px-4 py-4 whitespace-nowrap"><%= e.patrimony_number %></td>
+          <td class="px-4 py-4 whitespace-nowrap"><%= e.serial_number %></td>
+          <td class="px-4 py-4 whitespace-nowrap"><%= e.purchase_date.strftime("%d/%m/%Y") %></td>
+          <td class="px-4 py-4 whitespace-nowrap"><%= e.manufacture_date.strftime("%d/%m/%Y") %></td>
+          <td class="px-4 py-4"><%= e.description %></td>
+          <td class="px-4 py-4 whitespace-nowrap"><%= e.status_before_type_cast %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 
-  <%= link_to "Novo equipamento", new_equipment_path %>
+  <div class="mt-6 text-right">
+    <%= link_to "Novo equipamento", new_equipment_path, class: "inline-block bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700" %>
+  </div>
 </div>

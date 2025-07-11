@@ -1,71 +1,93 @@
-<h3 align="center">Histórico de Empréstimos</h3>
 
 
-<div>
-  <h3>Informações do Colaborador</h3>
-  <ul>
-    <li>Nome: <%= @collaborator.name %></li>
-    <li>Email: <%= @collaborator.email %></li>
-    <li>Setor: <%= @collaborator.department %></li>
+
+<div class="max-w-xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
+    Informações do Colaborador
+  </h2>
+
+  <ul class="space-y-4 text-gray-700">
+    <li>
+      <span class="font-semibold">Nome:</span> <%= @collaborator.name %>
+    </li>
+    <li>
+      <span class="font-semibold">Email:</span> <%= @collaborator.email %>
+    </li>
+    <li>
+      <span class="font-semibold">Setor:</span> <%= @collaborator.department %>
+    </li>
   </ul>
-  <%= link_to "Editar Colaborador", edit_collaborator_path(@collaborator) %>
-  <%= button_to "Deletar Colaborador", collaborator_path(@collaborator), method: :delete, data: { confirm: "Tem certeza que deseja excluir este colaborador?" } %>
+
+  <div class="mt-6 flex justify-between">
+    <%= link_to "Editar Colaborador", edit_collaborator_path(@collaborator),
+      class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+
+    <%= button_to "Deletar Colaborador", collaborator_path(@collaborator),
+      method: :delete,
+      data: { confirm: "Tem certeza que deseja excluir este colaborador?" },
+      class: "bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded" %>
+  </div>
 </div>
 
 
 
-<div align="center">
-
-  <%= search_form_for @q, url: collaborator_path(@collaborator) do |e| %>
+  
+<div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
+    Histórico de Empréstimos
+  </h2>
+  <%= search_form_for @q, url: collaborator_path(@collaborator), class: "grid grid-cols-1 md:grid-cols-3 gap-4" do |e| %>
     <div>
-      <%= e.label :loan_action_eq, "Tipo de Ação" %>
-      <%= e.select :loan_action_eq, Loan.loan_actions.map { |k, v| [k.titleize, v] }, include_blank: "Todos" %>
+      <%= e.label :loan_action_eq, "Tipo de Ação", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.select :loan_action_eq, Loan.loan_actions.map { |k, v| [k.titleize, v] }, { include_blank: "Todos" }, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
 
     <div>
-      <%= e.label :created_at_lteq, "Antes de" %>
-      <%= e.date_field :created_at_lteq %>
+      <%= e.label :created_at_lteq, "Antes de", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.date_field :created_at_lteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
 
     <div>
-      <%= e.label :created_at_gteq, "Depois de" %>
-      <%= e.date_field :created_at_gteq %>
+      <%= e.label :created_at_gteq, "Depois de", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.date_field :created_at_gteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
 
     <div>
-      <%= e.label :created_at_eq, "No dia" %>
-      <%= e.date_field :created_at_eq %>
-    </div>
-    <div>
-      <%= e.label :equipment_identifier_cont, "Equipamento (ID)" %>
-      <%= e.search_field :equipment_identifier_cont %>
+      <%= e.label :created_at_eq, "No dia", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.date_field :created_at_eq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
     </div>
 
     <div>
-      <%= e.submit "Filtrar" %>
-      <%= link_to "Limpar", collaborator_path(@collaborator) %>
+      <%= e.label :equipment_identifier_cont, "Equipamento (ID)", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.search_field :equipment_identifier_cont, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+    </div>
+
+    <div class="md:col-span-3 flex justify-start items-center gap-4 mt-4">
+      <%= e.submit "Filtrar", class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+      <%= link_to "Limpar", collaborator_path(@collaborator), class: "text-gray-600 underline hover:text-gray-900" %>
     </div>
   <% end %>
-
 </div>
 
 
 
-<div align="center">
+
+
+<div class="max-w-5xl mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
   <% if @collaborator.loans.any? %>
-    <table border="1px" align="center">
-      <thead>
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-100">
         <tr>
-          <th>Ação</th>
-          <th>Data</th>
-          <th>Equipamento</th>
-          <th>Motivo</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Ação</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Data</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Equipamento</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Motivo</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="bg-white divide-y divide-gray-200">
         <% @filtered_loans.order(created_at: :desc).each do |loan| %>
-          <tr>
-            <td>
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap">
               <%=
                 case loan.loan_action
                 when "emprestimo" then "Empréstimo"
@@ -74,7 +96,7 @@
                 end 
               %>
             </td>
-            <td>
+            <td class="px-6 py-4 whitespace-nowrap">
               <%= 
                 case loan.loan_action
                 when "emprestimo" then loan.loan_date
@@ -83,8 +105,8 @@
                 end
               %>
             </td>
-            <td> <%= loan.equipment.identifier %> </td>
-            <td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= loan.equipment.identifier %></td>
+            <td class="px-6 py-4 whitespace-nowrap">
               <%= 
               case loan.loan_action
               when "devolucao"  then loan.return_reason
@@ -98,8 +120,10 @@
       </tbody>
     </table>
   <% else %>
-    <p>Este Colaborador ainda nao fez um empréstimo</p>
+    <p class="text-gray-600 py-4">Este colaborador ainda não fez um empréstimo</p>
   <% end %>
-  <br>
-  <%= link_to 'Voltar para colaboradores', collaborators_path %>
+  
+  <div class="mt-6 text-right">
+    <%= link_to 'Voltar para colaboradores', collaborators_path, class: "inline-block bg-gray-600 text-white font-semibold py-2 px-4 rounded hover:bg-gray-700" %>
+  </div>
 </div>

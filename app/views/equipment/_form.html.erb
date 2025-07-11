@@ -1,62 +1,64 @@
-<%= form_with(model: equipment) do |form| %>
-  <% if equipment.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(equipment.errors.count, "error") %> prohibited this equipment from being saved:</h2>
+<div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800"><%= equipment.persisted? ? "Editar" : "Novo" %> Equipamento</h2>
 
-      <ul>
-        <% equipment.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+  <%= form_with(model: equipment) do |form| %>
+    <% if equipment.errors.any? %>
+      <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+        <ul class="list-disc list-inside">
+          <% equipment.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-4">
+      <%= form.label :brand, "Marca", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_field :brand, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :model, "Modelo", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_field :model, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :patrimony_number, "Número do Patrimônio", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_field :patrimony_number, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :serial_number, "Número de Série", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_field :serial_number, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :identifier, "Identificador", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_field :identifier, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :purchase_date, "Data de Compra", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.date_field :purchase_date, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :manufacture_date, "Data de Fabricação", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.date_field :manufacture_date, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :description, "Descrição", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_area :description, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :status, "Status", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_field :status, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mt-6">
+      <%= form.submit equipment.persisted? ? "Atualizar" : "Salvar", class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-full" %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :brand, style: "display: block" %>
-    <%= form.text_field :brand %>
-  </div>
-
-  <div>
-    <%= form.label :model, style: "display: block" %>
-    <%= form.text_field :model %>
-  </div>
-
-  <div>
-    <%= form.label :patrimony_number, style: "display: block" %>
-    <%= form.text_field :patrimony_number %>
-  </div>
-
-  <div>
-    <%= form.label :serial_number, style: "display: block" %>
-    <%= form.text_field :serial_number %>
-  </div>
-
-  <div>
-    <%= form.label :identifier, style: "display: block" %>
-    <%= form.text_field :identifier %>
-  </div>
-
-  <div>
-    <%= form.label :purchase_date, style: "display: block" %>
-    <%= form.date_field :purchase_date %>
-  </div>
-
-  <div>
-    <%= form.label :manufacture_date, style: "display: block" %>
-    <%= form.date_field :manufacture_date %>
-  </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

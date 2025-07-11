@@ -1,30 +1,36 @@
-<%= form_with(model: collaborator) do |form| %>
-  <% if collaborator.errors.any? %>
-    <div style="color: red">
-      <ul>
-        <% collaborator.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800">Novo Colaborador</h2>
+
+  <%= form_with(model: collaborator, local: true) do |form| %>
+
+    <% if collaborator.errors.any? %>
+      <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+        <ul class="list-disc list-inside">
+          <% collaborator.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-4">
+      <%= form.label :name, "Nome", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_field :name, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
     </div>
+
+    <div class="mb-4">
+      <%= form.label :email, "Email", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_field :email, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :department, "Setor", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.text_field :department, class: "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <div class="mt-6">
+      <%= form.submit "Salvar", class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-full" %>
+    </div>
+
   <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div>
-    <%= form.label :department, style: "display: block" %>
-    <%= form.text_field :department %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
