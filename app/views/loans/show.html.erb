@@ -1,10 +1,59 @@
-<p style="color: green"><%= notice %></p>
+<div class="max-w-xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+  <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
+    Detalhes do Empréstimo
+  </h3>
 
-<%= render @loan %>
+  <ul class="space-y-4 text-gray-700">
+    <li>
+      <span class="font-semibold">Notebook:</span>
+      <%= @loan.equipment.identifier %> – <%= @loan.equipment.brand %> <%= @loan.equipment.model %>
+    </li>
+    <li>
+      <span class="font-semibold">Colaborador:</span>
+      <%= @loan.collaborator.name %> (<%= @loan.collaborator.department %>)
+    </li>
+    <li>
+      <span class="font-semibold">Tipo de Ação:</span>
+      <%= @loan.loan_action.capitalize %>
+    </li>
 
-<div>
-  <%= link_to "Edit this loan", edit_loan_path(@loan) %> |
-  <%= link_to "Back to loans", loans_path %>
+    <% if @loan.loan_date.present? %>
+      <li>
+        <span class="font-semibold">Data do Empréstimo:</span>
+        <%= @loan.loan_date.strftime("%d/%m/%Y") %>
+      </li>
+    <% end %>
 
-  <%= button_to "Destroy this loan", @loan, method: :delete %>
+    <% if @loan.return_date.present? %>
+      <li>
+        <span class="font-semibold">Data da Devolução:</span>
+        <%= @loan.return_date.strftime("%d/%m/%Y") %>
+      </li>
+      <li>
+        <span class="font-semibold">Motivo da Devolução:</span>
+        <%= @loan.return_reason %>
+      </li>
+    <% end %>
+
+    <% if @loan.discard_date.present? %>
+      <li>
+        <span class="font-semibold">Data da Baixa:</span>
+        <%= @loan.discard_date.strftime("%d/%m/%Y") %>
+      </li>
+      <li>
+        <span class="font-semibold">Motivo da Baixa:</span>
+        <%= @loan.discard_reason %>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="mt-6 flex justify-between">
+    <%= link_to "Editar Empréstimo", edit_loan_path(@loan),
+      class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+
+    <%= button_to "Deletar Empréstimo", loan_path(@loan),
+      method: :delete,
+      data: { confirm: "Tem certeza que deseja excluir este empréstimo?" },
+      class: "bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded" %>
+  </div>
 </div>

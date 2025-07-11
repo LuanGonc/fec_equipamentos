@@ -1,10 +1,25 @@
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto px-4 py-10">
+  <!-- Card: Notebooks -->
+  <div class="bg-white p-6 rounded-lg border border-gray-300 shadow hover:shadow-lg transition">
+    <%= link_to equipment_index_path do %>
+      <img src="/assets/equipamento.png" alt="Notebooks" class="w-full h-48 object-contain mb-4 mx-auto" />
+      <p class="text-center text-lg font-semibold text-gray-800">Notebooks</p>
+    <% end %>
+  </div>
 
-<div align="center">
-    <h1>Gerenciamento de Notebooks</h1>
+  <!-- Card: Empréstimos -->
+  <div class="bg-white p-6 rounded-lg border border-gray-300 shadow hover:shadow-lg transition">
+    <%= link_to loans_path do %>
+      <img src="/assets/emprestimo.png" alt="Empréstimos" class="w-full h-48 object-contain mb-4 mx-auto" />
+      <p class="text-center text-lg font-semibold text-gray-800">Empréstimos</p>
+    <% end %>
+  </div>
 
-    <ul>
-        <li><%=  link_to "Gerenciar Notebooks", equipment_index_path %> </li>
-        <li><%=  link_to "Gerenciar Colaboradores", collaborators_path %></li>
-        <li> <%= link_to "Gerenciar Empréstimos", loans_path%></li>
-    </ul>
+  <!-- Card: Colaboradores -->
+  <div class="bg-white p-6 rounded-lg border border-gray-300 shadow hover:shadow-lg transition">
+    <%= link_to collaborators_path do %>
+      <img src="/assets/colaborador.png" alt="Colaboradores" class="w-full h-48 object-contain mb-4 mx-auto" />
+      <p class="text-center text-lg font-semibold text-gray-800">Colaboradores</p>
+    <% end %>
+  </div>
 </div>

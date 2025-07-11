@@ -14,7 +14,7 @@ pt-BR:
         purchase_date: Data de compra
         manufacture_date: Data de fabricação
         description: Descrição
-        status: Situação
+        status: Status
       collaborator:
         name: Nome
         email: E-mail
@@ -26,6 +26,8 @@ pt-BR:
         return_reason: Motivo da devolução
         discard_date: Data da baixa
         discard_reason: Justificativa da baixa
+        equipment: Nootebook
+        collaborator: Colaborador
   helpers:
     submit:
       collaborator:
@@ -41,3 +43,5 @@ pt-BR:
       blank: "não pode ficar em branco"
       taken: "já está em uso"
       invalid: "não é válido"
+      inclusion: "não é válido"
+      required: "é obrigatório"

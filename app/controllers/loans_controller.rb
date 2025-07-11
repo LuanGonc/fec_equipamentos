@@ -21,7 +21,9 @@ class LoansController < ApplicationController
   # POST /loans or /loans.json
   def create
     @loan = Loan.new(loan_params)
-    @equipment = Equipment.find(@loan.equipment_id)
+    unless @loan.equipment_id.blank?
+      @equipment = Equipment.find(@loan.equipment_id) 
+    end
 
     case @loan.loan_action
     when 'emprestimo'
@@ -32,6 +34,11 @@ class LoansController < ApplicationController
 
       if @loan.loan_date.blank?
         flash[:alert] = 'A data do empréstimo não pode ficar em branco.'
+        redirect_to new_loan_path and return
+      end
+
+      if @loan.equipment_id.blank?
+        flash[:alert] = 'O Notebook não pode ficar em branco'
         redirect_to new_loan_path and return
       end
 

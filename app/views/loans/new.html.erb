@@ -1,14 +1,13 @@
 
-<div align="center">
-
-<h1>Novo Empréstimo</h1>
+<div>
 
 
 
-<%= render "form", loan: @loan %>
 
-<br>
+  <%= render "form", loan: @loan %>
 
 
-  <%= link_to "Back to loans", loans_path %>
+  <div class="mt-6 text-center">
+    <%= link_to 'Voltar para Emprestimos', equipment_index_path, class: "inline-block bg-gray-600 text-white font-semibold py-2 px-4 rounded hover:bg-gray-700" %>
+  </div>
 </div>
