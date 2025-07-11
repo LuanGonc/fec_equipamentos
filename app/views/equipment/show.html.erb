@@ -33,6 +33,19 @@
     <li>
       <span class="font-semibold">Status:</span> <%= @equipment.status_before_type_cast %>
     </li>
+
+    <% if @equipment.invoice_pdf.attached? %>
+      <li>
+        <span class="font-semibold">Nota Fiscal (PDF):</span>
+        <div class="mt-1 flex items-center">
+          <%= link_to "Baixar Nota Fiscal", 
+                      rails_blob_path(@equipment.invoice_pdf, disposition: "attachment"),
+                      class: "text-blue-600 hover:underline" %>
+        </div>
+      </li>
+    <% end %>
+
+
   </ul>
 
   <div class="mt-6 flex justify-between">

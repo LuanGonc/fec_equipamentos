@@ -20,7 +20,8 @@ class EquipmentController < ApplicationController
   end
 
   # GET /equipment/1/edit
-  def edit; end
+  def edit
+  end
 
   # POST /equipment or /equipment.json
   def create
@@ -28,7 +29,7 @@ class EquipmentController < ApplicationController
 
     respond_to do |format|
       if @equipment.save
-        format.html { redirect_to @equipment, notice: 'Equipment was successfully created.' }
+        format.html { redirect_to @equipment, notice: 'Notebook criado com sucesso' }
         format.json { render :show, status: :created, location: @equipment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -89,6 +90,6 @@ class EquipmentController < ApplicationController
   # Only allow a list of trusted parameters through.
   def equipment_params
     params.require(:equipment).permit(:brand, :model, :patrimony_number, :serial_number, :identifier, :purchase_date,
-                                      :manufacture_date, :description, :status)
+                                      :manufacture_date, :description, :status, :invoice_pdf)
   end
 end

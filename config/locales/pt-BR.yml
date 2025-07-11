@@ -45,3 +45,4 @@ pt-BR:
       invalid: "não é válido"
       inclusion: "não é válido"
       required: "é obrigatório"
+      record_invalid: "A validação falhou: %{errors}"

@@ -9,7 +9,7 @@ class CreateEquipment < ActiveRecord::Migration[7.1]
       t.date :purchase_date
       t.date :manufacture_date
       t.text :description
-      t.string :status, null: false, default: 'disponível'
+      t.string :status, null: false
 
       t.timestamps
     end

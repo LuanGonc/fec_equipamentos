@@ -30,7 +30,7 @@ Collaborator.create!(
 )
 Collaborator.create!(
   name: 'Jonas',
-  email: 'Luan@fec.com',
+  email: 'Jonas@fec.com',
   department: 'Recursos Humanos'
 )
 Collaborator.create!(

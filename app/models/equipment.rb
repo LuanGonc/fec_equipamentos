@@ -1,6 +1,8 @@
 class Equipment < ApplicationRecord
   has_many :loans, dependent: :destroy
   before_validation :normalize_fields
+  has_one_attached :invoice_pdf
+  after_initialize :set_default_status, if: :new_record?
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[brand created_at identifier model patrimony_number purchase_date status]
@@ -18,7 +20,12 @@ class Equipment < ApplicationRecord
 
   validates :status, inclusion: { in: statuses.keys }
 
+  
+
   private
+  def set_default_status
+    self.status ||= 'Disponível'
+  end
 
   def normalize_fields
     self.brand = brand.strip.upcase if brand.present?
