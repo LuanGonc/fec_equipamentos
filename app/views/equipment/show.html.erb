@@ -6,32 +6,15 @@
   </h3>
 
   <ul class="space-y-4 text-gray-700">
-    <li>
-      <span class="font-semibold">Identificador:</span> <%= @equipment.identifier %>
-    </li>
-    <li>
-      <span class="font-semibold">Marca:</span> <%= @equipment.brand %>
-    </li>
-    <li>
-      <span class="font-semibold">Modelo:</span> <%= @equipment.model %>
-    </li>
-    <li>
-      <span class="font-semibold">Nº Patrimônio:</span> <%= @equipment.patrimony_number %>
-    </li>
-    <li>
-      <span class="font-semibold">Nº Serie:</span> <%= @equipment.serial_number %>
-    </li>
-    <li>
-      <span class="font-semibold">Data de Compra:</span> <%= @equipment.purchase_date.strftime("%d/%m/%Y") %>
-    </li>
-    <li>
-      <span class="font-semibold">Data de Fabricação:</span> <%= @equipment.manufacture_date.strftime("%d/%m/%Y") %>
-    </li>
-    <li>
-      <span class="font-semibold">Descrição:</span> <%= @equipment.description %>
-    </li>
-    <li>
-      <span class="font-semibold">Status:</span> <%= @equipment.status_before_type_cast %>
+    <li><span class="font-semibold">Identificador:</span> <%= @equipment.identifier %></li>
+    <li><span class="font-semibold">Marca:</span> <%= @equipment.brand %></li>
+    <li><span class="font-semibold">Modelo:</span> <%= @equipment.model %></li>
+    <li><span class="font-semibold">Nº Patrimônio:</span> <%= @equipment.patrimony_number %></li>
+    <li><span class="font-semibold">Nº Serie:</span> <%= @equipment.serial_number %></li>
+    <li><span class="font-semibold">Data de Compra:</span> <%= @equipment.purchase_date.strftime("%d/%m/%Y") %></li>
+    <li><span class="font-semibold">Data de Fabricação:</span> <%= @equipment.manufacture_date.strftime("%d/%m/%Y") %></li>
+    <li><span class="font-semibold">Descrição:</span> <%= @equipment.description %></li>
+    <li><span class="font-semibold">Status:</span> <%= @equipment.status_before_type_cast %>
     </li>
 
     <% if @equipment.invoice_pdf.attached? %>
@@ -67,90 +50,18 @@
   <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 text-center">
     Histórico de Empréstimos
   </h3>
-
-  <%= search_form_for @q, url: equipment_path(@equipment), class: "grid grid-cols-1 md:grid-cols-3 gap-4" do |emp| %>
-    <div>
-      <%= emp.label :loan_action_eq, "Ação", class: "block text-sm font-medium text-gray-700" %>
-      <%= emp.select :loan_action_eq, Loan.loan_actions.map { |k, v| [k.titleize, v] }, { include_blank: "Todos" }, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
-    </div>
-
-    <div>
-      <%= emp.label :collaborator_name_cont, "Colaborador", class: "block text-sm font-medium text-gray-700" %>
-      <%= emp.search_field :collaborator_name_cont, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
-    </div>
-
-    <div>
-      <%= emp.label :created_at_lteq, "Antes de", class: "block text-sm font-medium text-gray-700" %>
-      <%= emp.date_field :created_at_lteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
-    </div>
-
-    <div>
-      <%= emp.label :created_at_gteq, "Depois de", class: "block text-sm font-medium text-gray-700" %>
-      <%= emp.date_field :created_at_gteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
-    </div>
-
-    <div>
-      <%= emp.label :created_at_eq, "No dia", class: "block text-sm font-medium text-gray-700" %>
-      <%= emp.date_field :created_at_eq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
-    </div>
-
-    <div class="md:col-span-3 flex justify-start items-center gap-4 mt-4">
-      <%= emp.submit "Filtrar", class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
-      <%= link_to "Limpar", equipment_path(@equipment), class: "text-gray-600 underline hover:text-gray-900" %>
-    </div>
-
-  <% end %>
+  
+  <%= render 'filter_form', q: @q, url: equipment_path(@equipment) %>
+  
 </div>
 
 
 
 
 <div class="max-w-5xl mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
-  <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 text-center">
-    Histórico de Empréstimos
-  </h3>
 
-  <% if @filtered_loans.any? %>
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Ação</th>
-          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Data</th>
-          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Colaborador</th>
-          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Motivo</th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-        <% @filtered_loans.order(created_at: :desc).each do |loan| %>
-          <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4 whitespace-nowrap"><%= loan.loan_action.titleize %></td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <%=
-                case loan.loan_action
-                when "emprestimo" then loan.loan_date
-                when "devolucao"  then loan.return_date
-                when "baixa"      then loan.discard_date
-                end
-              %>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= loan.collaborator.name %></td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <%=
-                case loan.loan_action
-                when "devolucao"  then loan.return_reason
-                when "baixa"      then loan.discard_reason
-                else "-"
-                end
-              %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% else %>
-    <p class="text-gray-600 py-4 text-center">Este notebook ainda não tem histórico de empréstimos.</p>
-  <% end %>
-
+  <%= render 'loans_table', loans: @filtered_loans.order(created_at: :desc) %>
+  
   <div class="mt-6 text-right">
     <%= link_to 'Voltar para equipamentos', equipment_index_path, class: "inline-block bg-gray-600 text-white font-semibold py-2 px-4 rounded hover:bg-gray-700" %>
   </div>
