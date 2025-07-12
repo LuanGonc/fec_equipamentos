@@ -18,7 +18,7 @@ class Collaborator < ApplicationRecord
   private
 
   def normalize_fields
-    self.name = name.strip.upcase if name.present?
+    self.name = name.strip.titleize if name.present?
     self.email = email.strip.downcase if email.present?
     self.department = department.strip.titleize if department.present?
   end

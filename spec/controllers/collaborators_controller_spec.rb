@@ -73,7 +73,7 @@ RSpec.describe CollaboratorsController, type: :controller do
         patch :update, params: { id: collaborator.id, collaborator: valid_attributes }
 
         collaborator.reload
-        expect(collaborator.name).to eq('Nome Atualizado'.upcase)
+        expect(collaborator.name).to eq('Nome Atualizado'.titleize)
         expect(collaborator.email).to eq('atualizado@example.com'.downcase)
         expect(collaborator.department).to eq('RH'.titleize)
 

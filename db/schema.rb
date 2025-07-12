@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_11_130413) do
     t.date "purchase_date"
     t.date "manufacture_date"
     t.text "description"
+    t.string "loaned_for"
     t.string "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

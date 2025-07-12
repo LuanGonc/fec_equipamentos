@@ -9,6 +9,7 @@ class CreateEquipment < ActiveRecord::Migration[7.1]
       t.date :purchase_date
       t.date :manufacture_date
       t.text :description
+      t.string :loaned_for
       t.string :status, null: false
 
       t.timestamps

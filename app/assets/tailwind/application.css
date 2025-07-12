@@ -1,7 +1,19 @@
 @import "tailwindcss";
 
 
-.pagination a, .pagination span {
-  display: inline-block;
-  margin: 0 2px;
+.logo-container img.logo-img {
+  max-width: none !important; /* Remove max-width: 100% */
+  height: 100% !important; /* Mantém altura 100% do container */
+  width: auto !important; /* Mantém proporção */
+  display: block !important; /* Mantém display: block */
+  vertical-align: middle !important; /* Mantém alinhamento */
+}
+
+
+.logo-container .logo-img {
+  max-width: none;
+  height: 100%;
+  width: auto;
+  display: block;
+  vertical-align: middle;
 }

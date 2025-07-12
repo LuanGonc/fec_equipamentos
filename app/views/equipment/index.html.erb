@@ -60,8 +60,8 @@
         <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Nº Patrimônio</th>
         <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Nº Série</th>
         <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Data Compra</th>
-        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Data Fabricação</th>
-        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Descrição</th>
+        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Colaborador atual</th>
+        
         <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Status</th>
       </tr>
     </thead>
@@ -76,8 +76,8 @@
           <td class="px-4 py-4 whitespace-nowrap"><%= e.patrimony_number %></td>
           <td class="px-4 py-4 whitespace-nowrap"><%= e.serial_number %></td>
           <td class="px-4 py-4 whitespace-nowrap"><%= e.purchase_date.strftime("%d/%m/%Y") %></td>
-          <td class="px-4 py-4 whitespace-nowrap"><%= e.manufacture_date.strftime("%d/%m/%Y") %></td>
-          <td class="px-4 py-4"><%= e.description %></td>
+          <td class="px-4 py-4 whitespace-nowrap"><%= e.loaned_for %></td>
+          
           <td class="px-4 py-4 whitespace-nowrap"><%= e.status_before_type_cast %></td>
         </tr>
       <% end %>

@@ -15,6 +15,7 @@
     <li><span class="font-semibold">Data de Fabricação:</span> <%= @equipment.manufacture_date.strftime("%d/%m/%Y") %></li>
     <li><span class="font-semibold">Descrição:</span> <%= @equipment.description %></li>
     <li><span class="font-semibold">Status:</span> <%= @equipment.status_before_type_cast %>
+    <li><span class="font-semibold">Colaborador Atual:</span> <%= @equipment.loaned_for %>
     </li>
 
     <% if @equipment.invoice_pdf.attached? %>

@@ -75,7 +75,7 @@ class LoansController < ApplicationController
       render :new
     else
       handle_save do
-        @equipment.update!(status: 'emprestado')
+        @equipment.update!(status: 'emprestado', loaned_for: @loan.collaborator.name)
         'Notebook emprestado com sucesso.'
       end
     end
@@ -106,7 +106,7 @@ class LoansController < ApplicationController
         render :new
       else
         handle_save do
-          @equipment.update!(status: 'disponivel')
+          @equipment.update!(status: 'disponivel', loaned_for: "")
           'Notebook devolvido com sucesso.'
         end
       end
@@ -122,7 +122,7 @@ class LoansController < ApplicationController
     end
 
     handle_save do
-      @equipment.update!(status: 'indisponivel')
+      @equipment.update!(status: 'indisponivel', loaned_for: "")
       'Baixa realizada com sucesso.'
     end
   end
