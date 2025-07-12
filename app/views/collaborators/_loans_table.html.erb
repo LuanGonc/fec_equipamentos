@@ -1,0 +1,49 @@
+<% if @collaborator.loans.any? %>
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Ação</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Data</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Equipamento</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Motivo</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% @filtered_loans.order(created_at: :desc).each do |loan| %>
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <%=
+                case loan.loan_action
+                when "emprestimo" then "Empréstimo"
+                when "devolucao"  then "Devolução"
+                when "baixa"      then "Devolução"
+                end 
+              %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <%= 
+                case loan.loan_action
+                when "emprestimo" then loan.loan_date
+                when "devolucao"  then loan.return_date
+                when "baixa"      then loan.discard_date
+                end
+              %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= loan.equipment.identifier %></td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <%= 
+              case loan.loan_action
+              when "devolucao"  then loan.return_reason
+              when "baixa"      then loan.discard_reason
+              else "-"
+              end
+              %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-gray-600 py-4">Este colaborador ainda não fez um empréstimo</p>
+  <% end %>
+  

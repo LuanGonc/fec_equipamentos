@@ -1,0 +1,31 @@
+<%= search_form_for @q, url: collaborator_path(@collaborator), class: "grid grid-cols-1 md:grid-cols-3 gap-4" do |e| %>
+    <div>
+      <%= e.label :loan_action_eq, "Tipo de Ação", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.select :loan_action_eq, Loan.loan_actions.map { |k, v| [k.titleize, v] }, { include_blank: "Todos" }, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+    </div>
+
+    <div>
+      <%= e.label :created_at_lteq, "Antes de", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.date_field :created_at_lteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+    </div>
+
+    <div>
+      <%= e.label :created_at_gteq, "Depois de", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.date_field :created_at_gteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+    </div>
+
+    <div>
+      <%= e.label :created_at_eq, "No dia", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.date_field :created_at_eq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+    </div>
+
+    <div>
+      <%= e.label :equipment_identifier_cont, "Equipamento (ID)", class: "block text-sm font-medium text-gray-700" %>
+      <%= e.search_field :equipment_identifier_cont, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+    </div>
+
+    <div class="md:col-span-3 flex justify-start items-center gap-4 mt-4">
+      <%= e.submit "Filtrar", class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+      <%= link_to "Limpar", collaborator_path(@collaborator), class: "text-gray-600 underline hover:text-gray-900" %>
+    </div>
+  <% end %>
