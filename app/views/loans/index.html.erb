@@ -2,73 +2,13 @@
 
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md">
   <h1 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 text-center">Empréstimos</h1>
+  <%= render 'search_form', q: @q, url: loans_path %>
 
-  <%= search_form_for @q, url: loans_path, class: "grid grid-cols-1 md:grid-cols-3 gap-4" do |l| %>
-    <div>
-      <%= l.label :loan_action_eq, "Ação", class: "block text-sm font-medium text-gray-700" %>
-      <%= l.select :loan_action_eq, Loan.loan_actions.map { |k, v| [k.titleize, v] }, { include_blank: "Todos" }, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
-    </div>
-    
-    <div>
-      <%= l.label :collaborator_name_cont, "Colaborador", class: "block text-sm font-medium text-gray-700" %>
-      <%= l.search_field :collaborator_name_cont, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
-    </div>
-    
-    <div>
-      <%= l.label :equipment_identifier_cont, "Equipamento", class: "block text-sm font-medium text-gray-700" %>
-      <%= l.search_field :equipment_identifier_cont, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
-    </div>
-    
-    <div>
-      <%= l.label :created_at_lteq, "Antes de", class: "block text-sm font-medium text-gray-700" %>
-      <%= l.date_field :created_at_lteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
-    </div>
-    
-    <div>
-      <%= l.label :created_at_gteq, "Depois de", class: "block text-sm font-medium text-gray-700" %>
-      <%= l.date_field :created_at_gteq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
-    </div>
-    
-    <div>
-      <%= l.label :created_at_eq, "No dia", class: "block text-sm font-medium text-gray-700" %>
-      <%= l.date_field :created_at_eq, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
-    </div>
-    
-    <div class="md:col-span-3 flex justify-start items-center gap-4 mt-4">
-      <%= l.submit "Filtrar", class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
-      <%= link_to "Limpar", loans_path, class: "text-gray-600 underline hover:text-gray-900" %>
-    </div>
-  <% end %>
 </div>
 
 
 <div class="max-w-5xl mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
-  <table class="min-w-full divide-y divide-gray-200">
-    <thead class="bg-gray-100">
-      <tr>
-        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Equipamento</th>
-        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Colaborador</th>
-        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Tipo</th>
-        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Data Empréstimo</th>
-        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Data Devolução</th>
-      </tr>
-    </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
-      <% @loans.each do |loan| %>
-        <tr class="hover:bg-gray-50">
-          <td class="px-6 py-4 whitespace-nowrap">
-            <%= link_to loan.equipment.identifier, equipment_path(loan.equipment), class: "text-blue-600 hover:underline" %>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <%= link_to loan.collaborator.name, collaborator_path(loan.collaborator), class: "text-blue-600 hover:underline" %>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= link_to loan.loan_action, loan_path(loan), class: "text-blue-600 hover:underline" %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= loan.loan_date || "-" %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= loan.return_date || "-" %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <%= render 'loans_table', loans: @loans %>
 
   <div class="mt-6 text-right">
     <%= link_to "Novo empréstimo", new_loan_path, class: "inline-block bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700" %>

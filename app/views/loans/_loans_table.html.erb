@@ -1,0 +1,26 @@
+<table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Equipamento</th>
+        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Colaborador</th>
+        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Tipo</th>
+        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Data Empréstimo</th>
+        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Data Devolução</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <% @loans.each do |loan| %>
+        <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <%= link_to loan.equipment.identifier, equipment_path(loan.equipment), class: "text-blue-600 hover:underline" %>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <%= link_to loan.collaborator.name, collaborator_path(loan.collaborator), class: "text-blue-600 hover:underline" %>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap"><%= link_to loan.loan_action, loan_path(loan), class: "text-blue-600 hover:underline" %></td>
+          <td class="px-6 py-4 whitespace-nowrap"><%= loan.loan_date || "-" %></td>
+          <td class="px-6 py-4 whitespace-nowrap"><%= loan.return_date || "-" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
