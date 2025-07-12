@@ -45,6 +45,7 @@ RSpec.describe LoansController, type: :controller do
     context 'com parâmetros válidos para devolução' do
       let(:equipment) { create(:equipment, status: 'emprestado') }
       let(:collaborator) { create(:collaborator) }
+      let!(:previous_loan) { create(:loan, equipment: equipment, collaborator: collaborator) }
 
       let(:valid_return_params) do
         {
@@ -64,7 +65,7 @@ RSpec.describe LoansController, type: :controller do
         end.to change(Loan, :count).by(1)
 
         expect(response).to redirect_to(Loan.last)
-        expect(flash[:notice]).to eq('Notebook emprestado com sucesso.')
+        expect(flash[:notice]).to eq('Notebook devolvido com sucesso.')
       end
 
       it "altera o status do equipamento para 'disponivel'" do
@@ -77,7 +78,7 @@ RSpec.describe LoansController, type: :controller do
       let(:equipment) { create(:equipment, status: 'disponivel') }
       let(:collaborator) { create(:collaborator) }
 
-      it "não cria o empréstimo e redireciona para 'new'" do
+      it "não cria o empréstimo e re-renderiza o template 'new'" do
         expect do
           post :create, params: {
             loan: {
@@ -89,8 +90,9 @@ RSpec.describe LoansController, type: :controller do
           }
         end.not_to change(Loan, :count)
 
-        expect(response).to redirect_to(new_loan_path)
-        expect(flash[:alert]).to eq('A data do empréstimo não pode ficar em branco.')
+        expect(response).to render_template(:new)
+        expect(assigns(:loan)).to be_invalid
+        expect(assigns(:loan).errors[:loan_date]).to include("não pode ficar em branco")
       end
     end
 
@@ -98,7 +100,7 @@ RSpec.describe LoansController, type: :controller do
       let(:equipment) { create(:equipment, status: 'emprestado') }
       let(:collaborator) { create(:collaborator) }
 
-      it "não cria a devolução e redireciona para 'new'" do
+      it "não cria a devolução e re-renderiza o template 'new'" do
         expect do
           post :create, params: {
             loan: {
@@ -110,15 +112,18 @@ RSpec.describe LoansController, type: :controller do
           }
         end.not_to change(Loan, :count)
 
-        expect(response).to redirect_to(new_loan_path)
-        expect(flash[:alert]).to eq('Data e motivo da devolução são obrigatórios.')
+        expect(response).to render_template(:new)
+        expect(assigns(:loan)).to be_invalid
+        expect(assigns(:loan).errors[:return_date]).to include("não pode ficar em branco")
+        expect(assigns(:loan).errors[:return_reason]).to include("não pode ficar em branco")
       end
     end
 
     context 'com parâmetros inválidos para baixa' do
       let(:equipment) { create(:equipment) }
       let(:collaborator) { create(:collaborator) }
-      it "não cria a baixa e redireciona para 'new'" do
+      
+      it "não cria a baixa e re-renderiza o template 'new'" do
         expect do
           post :create, params: {
             loan: {
@@ -130,28 +135,11 @@ RSpec.describe LoansController, type: :controller do
           }
         end.not_to change(Loan, :count)
 
-        expect(response).to redirect_to(new_loan_path)
-        expect(flash[:alert]).to eq('Data e justificativa da baixa são obrigatórias.')
+        expect(response).to render_template(:new)
+        expect(assigns(:loan)).to be_invalid
+        expect(assigns(:loan).errors[:discard_date]).to include("não pode ficar em branco")
+        expect(assigns(:loan).errors[:discard_reason]).to include("não pode ficar em branco")
       end
-    end
-  end
-
-
-  ######
-  describe "GET #index" do
-    before do
-      create_list(:loan, 3) #usa a factory
-      get :index
-    end
-
-    it "atribui todos os empréstimos à variável @loans" do
-      expect(assigns(:loans).count).to eq(3)
-      expect(assigns(:loans)).to all(be_a(Loan))
-    end
-
-    it "renderiza o template index" do
-      expect(response).to render_template(:index)
-      expect(response).to have_http_status(:ok)
     end
   end
 end

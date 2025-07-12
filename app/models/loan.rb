@@ -22,8 +22,7 @@ class Loan < ApplicationRecord
 
   validates :loan_action, :equipment_id, :collaborator_id, presence: true
   validates :loan_action, inclusion: { in: loan_actions.keys }
-
-  validate :validate_by_action # chama método para validação personalizada para cada tipo de ação
+  validate :validate_by_action 
 
   after_create :update_status
 
@@ -32,15 +31,15 @@ class Loan < ApplicationRecord
   def validate_by_action
     case loan_action
     when 'emprestimo'
-      errors.add(:loan_date, 'Não pode ficar em branco') if loan_date.blank?
+      errors.add(:loan_date, 'não pode ficar em branco') if loan_date.blank?
 
     when 'devolucao'
-      errors.add(:return_date, 'Não pode ficar em branco') if return_date.blank?
-      errors.add(:return_reason, 'Não pode ficar em branco') if return_reason.blank?
+      errors.add(:return_date, 'não pode ficar em branco') if return_date.blank?
+      errors.add(:return_reason, 'não pode ficar em branco') if return_reason.blank?
 
     when 'baixa'
-      errors.add(:discard_date, 'Não pode ficar em branco') if discard_date.blank?
-      errors.add(:discard_reason, 'Não pode ficar em branco') if discard_reason.blank?
+      errors.add(:discard_date, 'não pode ficar em branco') if discard_date.blank?
+      errors.add(:discard_reason, 'não pode ficar em branco') if discard_reason.blank?
     end
   end
 
@@ -56,4 +55,5 @@ class Loan < ApplicationRecord
       equipment.update(status: 'indisponivel')
     end
   end
+
 end

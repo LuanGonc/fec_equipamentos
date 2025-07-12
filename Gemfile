@@ -90,3 +90,7 @@ gem "tailwindcss-rails", "~> 4.3"
 
 gem 'kaminari'
 gem 'kaminari-tailwind'
+
+group :test do
+  gem 'rspec-collection_matchers'
+end

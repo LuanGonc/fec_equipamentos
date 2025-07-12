@@ -1,6 +1,6 @@
 class LoansController < ApplicationController
   before_action :set_loan, only: %i[show edit update destroy]
-
+  skip_before_action :set_loan, only: %i[new create index]
   # GET /loans or /loans.json
   def index
     @q = Loan.ransack(params[:q])
@@ -21,63 +21,20 @@ class LoansController < ApplicationController
   # POST /loans or /loans.json
   def create
     @loan = Loan.new(loan_params)
-    unless @loan.equipment_id.blank?
-      @equipment = Equipment.find(@loan.equipment_id) 
-    end
+    @equipment = Equipment.find(@loan.equipment_id) if @loan.equipment_id.present?
 
     case @loan.loan_action
     when 'emprestimo'
-      if @equipment.status != 'disponivel'
-        flash[:alert] = 'O equipamento não está disponível'
-        redirect_to new_loan_path and return
-      end
-
-      if @loan.loan_date.blank?
-        flash[:alert] = 'A data do empréstimo não pode ficar em branco.'
-        redirect_to new_loan_path and return
-      end
-
-      if @loan.equipment_id.blank?
-        flash[:alert] = 'O Notebook não pode ficar em branco'
-        redirect_to new_loan_path and return
-      end
-
-      @equipment.update(status: 'emprestado')
-
+      return handle_loan_creation
     when 'devolucao'
-      if @equipment.status != 'emprestado'
-        flash[:alert] = 'Só é possível devolver um equipamento que está emprestado.'
-        redirect_to new_loan_path and return
-      end
-
-      if @loan.return_date.blank? || @loan.return_reason.blank?
-        flash[:alert] = 'Data e motivo da devolução são obrigatórios.'
-        redirect_to new_loan_path and return
-      end
-
-      @equipment.update(status: 'disponivel')
-
+      return handle_return_creation
     when 'baixa'
-
-      if @loan.discard_date.blank? || @loan.discard_reason.blank?
-        flash[:alert] = 'Data e justificativa da baixa são obrigatórias.'
-        redirect_to new_loan_path and return
-      end
-
-      @equipment.update(status: 'indisponivel')
+      return handle_write_off_creation
     end
 
-    respond_to do |format|
-      if @loan.save
-        format.html { redirect_to @loan, notice: 'Notebook emprestado com sucesso.' }
-        format.json { render :show, status: :created, location: @loan }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @loan.errors, status: :unprocessable_entity }
-      end
-    end
+    handle_save
   end
-
+  
   # PATCH/PUT /loans/1 or /loans/1.json
   def update
     respond_to do |format|
@@ -102,6 +59,92 @@ class LoansController < ApplicationController
   end
 
   private
+
+
+  def handle_loan_creation
+    # Primeiro verifica se o equipamento existe
+    if @equipment.nil?
+      @loan.errors.add(:equipment, "é obrigatório")
+      render :new
+      return
+    end
+
+    # Depois verifica o status
+    if @equipment.status != 'disponivel'
+      @loan.errors.add(:base, 'O notebook não está disponível.')
+      render :new
+    else
+      handle_save do
+        @equipment.update!(status: 'emprestado')
+        'Notebook emprestado com sucesso.'
+      end
+    end
+  end
+
+  def handle_return_creation
+    # Primeiro verifica se o equipamento existe
+    if @equipment.nil?
+      @loan.errors.add(:equipment, "é obrigatório")
+      render :new
+      return
+    end
+
+    # Depois verifica o status
+    if @equipment.status != 'emprestado'
+      @loan.errors.add(:base, 'Só é possível devolver um notebook que está emprestado.')
+      render :new
+    else
+      @last_loan = Loan.where(equipment_id: @loan.equipment_id, loan_action: 'emprestimo')
+                      .order(created_at: :desc)
+                      .first
+
+      if @last_loan.nil?
+        @loan.errors.add(:base, 'Não foi encontrado um empréstimo válido para este equipamento.')
+        render :new
+      elsif @loan.collaborator_id != @last_loan.collaborator_id
+        @loan.errors.add(:base, 'Somente o colaborador que fez o empréstimo pode devolver o notebook.')
+        render :new
+      else
+        handle_save do
+          @equipment.update!(status: 'disponivel')
+          'Notebook devolvido com sucesso.'
+        end
+      end
+    end
+  end
+
+  def handle_write_off_creation
+    # Primeiro verifica se o equipamento existe
+    if @equipment.nil?
+      @loan.errors.add(:equipment, "é obrigatório")
+      render :new
+      return
+    end
+
+    handle_save do
+      @equipment.update!(status: 'indisponivel')
+      'Baixa realizada com sucesso.'
+    end
+  end
+  
+  def handle_save(&block)
+    if @loan.save
+      yield if block_given? 
+      notice_message = block_given? ? block.call : 'Operação realizada com sucesso.'
+      
+      respond_to do |format|
+        format.html { redirect_to @loan, notice: notice_message }
+        format.json { render :show, status: :created, location: @loan }
+      end
+    else
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @loan.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  
 
   # Use callbacks to share common setup or constraints between actions.
   def set_loan

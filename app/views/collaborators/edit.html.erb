@@ -1,13 +1,13 @@
 <div align="center">
 
 
-<h1>Editando Colaborador</h1>
 
 <%= render "form", collaborator: @collaborator %>
 
 <br>
 
 
-  <%= link_to "Visualizar colaborador", @collaborator %> |
-  <%= link_to "Voltar para colaboradores", collaborators_path %>
+  <%= link_to "Ver este Colaborador", @collaborator, class: "inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700" %>
+
+  <%= link_to "Voltar para Notebooks", collaborator_path, class: "inline-block bg-gray-600 text-white font-semibold py-2 px-4 rounded hover:bg-gray-700" %>
 </div>
