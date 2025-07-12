@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md">
-  <h1 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 text-center">Empréstimos</h1>
+  <h1 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 text-center">Controle de Fluxos</h1>
   <%= render 'search_form', q: @q, url: loans_path %>
 
 </div>
@@ -11,7 +11,7 @@
     <%= render 'loans_table', loans: @loans %>
 
   <div class="mt-6 text-right">
-    <%= link_to "Novo empréstimo", new_loan_path, class: "inline-block bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700" %>
+    <%= link_to "Novo Fluxo", new_loan_path, class: "inline-block bg-green-600 text-white font-semibold py-2 px-4 rounded hover:bg-green-700" %>
   </div>
 </div>
 
