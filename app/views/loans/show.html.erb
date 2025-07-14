@@ -1,6 +1,6 @@
 <div class="max-w-xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
   <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
-    Detalhes do Empréstimo
+    Detalhes do Fluxo
   </h3>
 
   <ul class="space-y-4 text-gray-700">
@@ -48,10 +48,10 @@
   </ul>
 
   <div class="mt-6 flex justify-between">
-    <%= link_to "Editar Empréstimo", edit_loan_path(@loan),
+    <!--<%= link_to "Editar Empréstimo", edit_loan_path(@loan),
       class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
-
-    <%= button_to "Deletar Empréstimo", loan_path(@loan),
+    -->
+    <%= button_to "Deletar Fluxo", loan_path(@loan),
       method: :delete,
       data: { confirm: "Tem certeza que deseja excluir este empréstimo?" },
       class: "bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded" %>
