@@ -62,14 +62,14 @@ class LoansController < ApplicationController
 
 
   def handle_loan_creation
-    # Primeiro verifica se o equipamento existe
+   
     if @equipment.nil?
       @loan.errors.add(:equipment, "é obrigatório")
       render :new
       return
     end
 
-    # Depois verifica o status
+    
     if @equipment.status != 'disponivel'
       @loan.errors.add(:base, 'O notebook não está disponível.')
       render :new
@@ -82,14 +82,14 @@ class LoansController < ApplicationController
   end
 
   def handle_return_creation
-    # Primeiro verifica se o equipamento existe
+    
     if @equipment.nil?
       @loan.errors.add(:equipment, "é obrigatório")
       render :new
       return
     end
 
-    # Depois verifica o status
+    
     if @equipment.status != 'emprestado'
       @loan.errors.add(:base, 'Só é possível devolver um notebook que está emprestado.')
       render :new
@@ -114,7 +114,7 @@ class LoansController < ApplicationController
   end
 
   def handle_write_off_creation
-    # Primeiro verifica se o equipamento existe
+    
     if @equipment.nil?
       @loan.errors.add(:equipment, "é obrigatório")
       render :new

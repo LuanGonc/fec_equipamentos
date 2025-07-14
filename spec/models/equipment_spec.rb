@@ -9,7 +9,7 @@ RSpec.describe Equipment, type: :model do
     expect(subject).to be_valid
   end
 
-  # Testes de presença
+  # Testa presença
   it { should validate_presence_of(:brand) }
   it { should validate_presence_of(:model) }
   it { should validate_presence_of(:patrimony_number) }
@@ -18,7 +18,7 @@ RSpec.describe Equipment, type: :model do
   it { should validate_presence_of(:purchase_date) }
   it { should validate_presence_of(:status) }
 
-  # Testes de unicidade (com registro pré-existente)
+  # Testes de unicidade
   describe 'validações de unicidade' do
     let!(:existing_equip) { create(:equipment) } # create salva no banco
 

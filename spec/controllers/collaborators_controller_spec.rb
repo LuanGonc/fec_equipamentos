@@ -1,4 +1,4 @@
-# spec/controllers/collaborators_controller_spec.rb
+
 require 'rails_helper'
 
 RSpec.describe CollaboratorsController, type: :controller do
@@ -85,7 +85,7 @@ RSpec.describe CollaboratorsController, type: :controller do
     context 'com parâmetros inválidos' do
       let(:invalid_attributes) do
         {
-          name: '', # nome em branco é inválido
+          name: '', 
           email: 'invalido',
           department: ''
         }
